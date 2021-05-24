@@ -12,8 +12,9 @@ html{
 }
 
 body{
-    
-    background-color: lightskyblue;
+    background-image: url(../img/background.jpg);
+    background-size: auto;
+    background-repeat: no-repeat;
 }
 
 .elfooter {
@@ -30,4 +31,18 @@ body{
             flex-direction: row;
     -ms-flex-pack: distribute;
         justify-content: space-around;
-  }
+}
+
+a {
+    text-decoration: none;
+    font-size: 2rem;
+    color: var(--cuarto);
+}
+
+a:hover{
+    color: orangered;
+}
+
+h1{
+    color: white;
+}
