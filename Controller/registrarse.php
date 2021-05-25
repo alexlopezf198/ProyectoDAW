@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../Model/Usuario.php';
 
 //comprueba si el usuario ha iniciado sesion
@@ -37,5 +38,5 @@ if (!isset($_SESSION['user'])) {
     include '../View/registro.php';
     
 }else{
-    header('location:'.getenv('HTTP_REFERER'));    
+    header("Location: ../index.php"); 
 }

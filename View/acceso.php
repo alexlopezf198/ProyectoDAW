@@ -29,14 +29,24 @@
 
                     <h2 class="text-center bg-primary text-light text-uppercase py-2">Panel de login</h2>
 
-                    <form action="#">
+                    <form action="" method="post">
                         <div class="mb-3">
                         <label for="dni" class="form-label">Usuario: </label>
-                        <input type="text" id="dni" name="dni" class="form-control" required placeholder="Escriba su DNI">
+                        <input type="text" id="dni" name="dni" class="form-control <?php if (isset($dni_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba su DNI">
+                            <?php if (isset($dni_error)): ?>
+                                    <div class="invalid-feedback">
+                                        <?php echo $dni_error; ?>
+                                    </div>
+                            <?php endif ?>
                         </div>
                         <div class="mb-3">
                         <label for="password" class="form-label">Contraseña: </label>
-                        <input type="password" id="password" name="password" class="form-control" required placeholder="Escriba contraseña">
+                        <input type="password" id="password" name="password" class="form-control <?php if (isset($pass_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba contraseña">
+                            <?php if (isset($pass_error)): ?>
+                                    <div class="invalid-feedback">
+                                        <?php echo $pass_error; ?>
+                                    </div>
+                            <?php endif ?>
                         </div>
                         <div class="mb-3">
                         <label for="recordar" class="form-check-label">Recordar</label>
