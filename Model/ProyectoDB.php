@@ -1,7 +1,7 @@
 <?php
 abstract class ProyectoDB {
 private static $server = 'localhost';
-private static $db = 'proyecto';
+private static $db = 'proyectodaw';
 private static $user = 'root';
 private static $password = '';
 public static function connectDB() {

@@ -6,20 +6,22 @@ class Usuario{
     private $apellidos;
     private $email;
     private $provincia;
-    private $poblacion;
+    private $localidad;
     private $fechaNacimiento;
+    private $contrasenia;
     private $esTecnico;
     private $esAdmin;
 
-    function __construct($dni, $nombre, $apellidos, $email, $provincia, $poblacion, $fechaNacimiento, $esTecnico, $esAdmin) {
+    function __construct($dni, $nombre, $apellidos, $email, $provincia, $localidad, $fechaNacimiento, $contrasenia, $esTecnico, $esAdmin) {
         
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->email = $email;
         $this->provincia = $provincia;
-        $this->poblacion = $poblacion;
+        $this->localidad = $localidad;
         $this->fechaNacimiento = $fechaNacimiento;
+        $this->contrasenia = $contrasenia;
         $this->esTecnico = $esTecnico;
         $this->esAdmin = $esAdmin;
 
@@ -27,7 +29,7 @@ class Usuario{
 
     public function insert() {
         $conexion = ProyectoDB::connectDB();
-        $insercion = "INSERT INTO usuario (dni, nombre, apellidos, email, provincia, poblacion, fechaNacimiento, esTecnico, esAdmin) VALUES (\"".$this->dni."\", \"".$this->nombre."\", \"".$this->apellidos."\", \"".$this->email."\", \"".$this->provincia."\", \"".$this->poblacion."\", \"".$this->fechaNacimiento."\", \"".$this->esTecnico."\", \"".$this->esAdmin."\")";
+        $insercion = "INSERT INTO usuario (dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin) VALUES (\"".$this->dni."\", \"".$this->nombre."\", \"".$this->apellidos."\", \"".$this->email."\", \"".$this->provincia."\", \"".$this->localidad."\", \"".$this->fechaNacimiento."\", \"".$this->contrasenia."\", \"".$this->esTecnico."\", \"".$this->esAdmin."\")";
         $conexion->exec($insercion);
     }
     public function delete() {
@@ -37,28 +39,52 @@ class Usuario{
     }
     public function update() {
         $conexion = ProyectoDB::connectDB();
-        $actualiza = "UPDATE usuario SET nombre=\"".$this->nombre."\", apellidos=\"".$this->apellidos."\", email=\"".$this->email."\", provincia=\"".$this->provincia."\", poblacion=\"".$this->poblacion."\", fechaNacimiento=\"".$this->fechaNacimiento."\", esTecnico=\"".$this->esTecnico."\", esAdmin=\"".$this->esAdmin."\" WHERE dni=\"".$this->dni."\"";
+        $actualiza = "UPDATE usuario SET nombre=\"".$this->nombre."\", apellidos=\"".$this->apellidos."\", email=\"".$this->email."\", provincia=\"".$this->provincia."\", localidad=\"".$this->localidad."\", fechaNacimiento=\"".$this->fechaNacimiento."\", contrasenia=\"".$this->contrasenia."\", esTecnico=\"".$this->esTecnico."\", esAdmin=\"".$this->esAdmin."\" WHERE dni=\"".$this->dni."\"";
         $conexion->exec($actualiza);
     }
 
     public static function getUsuarios() {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, poblacion, fechaNacimiento, esTecnico, esAdmin FROM usuario ORDER BY apellidos";
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin FROM usuario ORDER BY apellidos";
         $consulta = $conexion->query($seleccion);
         $usuarios = [];
         while ($registro = $consulta->fetchObject()) {
-            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->poblacion, $registro->fechaNacimiento, $registro->esTecnico, $registro->esAdmin);
+            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin);
         }
         return $usuarios;
     }
     
     public static function getUsuarioById($id) {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, poblacion, fechaNacimiento, esTecnico, esAdmin FROM usuario WHERE dni=\"".$id."\"";
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin FROM usuario WHERE dni=\"".$id."\"";
         $consulta = $conexion->query($seleccion);
         $registro = $consulta->fetchObject();
-        $usuario = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->poblacion, $registro->fechaNacimiento, $registro->esTecnico, $registro->esAdmin);
+        $usuario = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin);
         return $usuario;
+    }
+
+    public static function existeDni($dni) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT * FROM usuario WHERE dni=\"".$dni."\"";
+        $consulta = $conexion->query($seleccion);
+
+        if ($consulta->rowCount() > 0) {
+            return true;	
+        } else {
+            return false;
+        }
+    }
+
+    public static function existeEmail($email) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT * FROM usuario WHERE email=\"".$email."\"";
+        $consulta = $conexion->query($seleccion);
+
+        if ($consulta->rowCount() > 0) {
+            return true;	
+        } else {
+            return false;
+        }
     }
 
     public function getDni()
@@ -121,14 +147,14 @@ class Usuario{
         return $this;
     }
 
-    public function getPoblacion()
+    public function getLocalidad()
     {
-        return $this->poblacion;
+        return $this->localidad;
     }
 
-    public function setPoblacion($poblacion)
+    public function setLocalidad($localidad)
     {
-        $this->poblacion = $poblacion;
+        $this->localidad = $localidad;
 
         return $this;
     }
@@ -141,6 +167,18 @@ class Usuario{
     public function setFechaNacimiento($fechaNacimiento)
     {
         $this->fechaNacimiento = $fechaNacimiento;
+
+        return $this;
+    }
+
+    public function getContrasenia()
+    {
+        return $this->contrasenia;
+    }
+
+    public function setContrasenia($contrasenia)
+    {
+        $this->contrasenia = $contrasenia;
 
         return $this;
     }

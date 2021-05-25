@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="../View/css/estilos.css">
     <title>Sistema de gestión de incidencias</title>
   </head>
@@ -29,21 +29,21 @@
 
                     <h2 class="text-center bg-primary text-light text-uppercase py-2">Panel de login</h2>
 
-                    <form action="">
+                    <form action="#">
                         <div class="mb-3">
-                        <label for="email" class="form-label">Usuario: </label>
-                        <input type="email" id="email" class="form-control" required placeholder="Escriba su DNI">
+                        <label for="dni" class="form-label">Usuario: </label>
+                        <input type="text" id="dni" name="dni" class="form-control" required placeholder="Escriba su DNI">
                         </div>
                         <div class="mb-3">
                         <label for="password" class="form-label">Contraseña: </label>
-                        <input type="password" id="password" class="form-control" required placeholder="Escriba contraseña">
+                        <input type="password" id="password" name="password" class="form-control" required placeholder="Escriba contraseña">
                         </div>
                         <div class="mb-3">
                         <label for="recordar" class="form-check-label">Recordar</label>
-                        <input type="checkbox" id="recordar" class="form-check-input">
+                        <input type="checkbox" id="recordar" name="recordar" class="form-check-input">
                         </div>
 
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Registrarse</button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="window.location.href='registrarse.php'">Registrarse</button>
                         <input type="submit" class="btn btn-success" value="Iniciar sesión">
                     </form>
 
@@ -74,6 +74,8 @@
                     </div>
                 </div>
             </footer>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
   </body>
 </html>
