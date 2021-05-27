@@ -12,7 +12,7 @@ class Usuario{
     private $esTecnico;
     private $esAdmin;
 
-    function __construct($dni, $nombre, $apellidos, $email, $provincia, $localidad, $fechaNacimiento, $contrasenia, $esTecnico, $esAdmin) {
+    function __construct($dni="", $nombre="", $apellidos="", $email="", $provincia="", $localidad="", $fechaNacimiento="", $contrasenia="", $esTecnico=false, $esAdmin=false) {
         
         $this->dni = $dni;
         $this->nombre = $nombre;

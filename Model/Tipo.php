@@ -5,7 +5,7 @@ class Tipo{
     private $nombre;
     private $descripcion;
 
-    function __construct($id, $nombre, $descripcion) {
+    function __construct($id=0, $nombre="", $descripcion="") {
         
         $this->id = $id;
         $this->nombre = $nombre;

@@ -36,11 +36,20 @@ if (!isset($_SESSION['user'])) {
     $usuario = Usuario::getUsuarioById($_SESSION['user']);
 
     if (!$usuario->getEsTecnico() && !$usuario->getEsAdmin()) {
+
+        $data['user'] = Usuario::getUsuariobyId($_SESSION['user']);
+        $data['nombre'] = $data['user']->getNombre();
+        $data['apellidos'] = $data['user']->getApellidos();
         include '../View/cliente.php';
+
     } else if ($usuario->getEsTecnico() && !$usuario->getEsAdmin()) {
+
         // include '../View/tecnico.php';
+
     } else if ($usuario->getEsAdmin()) {
+
         // include '../View/admin.php';
+        
     }
     
 }

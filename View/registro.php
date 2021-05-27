@@ -123,7 +123,7 @@
                     <form action="#" method="post" id="myForm">
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI: </label>
-                            <input type="text" id="dni" name="dni" class="form-control <?php if (isset($dni_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba su DNI">
+                            <input type="text" id="dni" name="dni" class="form-control <?php if (isset($dni_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba su DNI" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra">
                                 <?php if (isset($dni_error)): ?>
                                     <div class="invalid-feedback">
                                         <?php echo $dni_error; ?>
@@ -252,7 +252,7 @@
 
             <!-- Modal HTML -->
             <div id="myModal" class="modal fade">
-                <div class="modal-dialog modal-confirm">
+                <div class="modal-dialog modal-dialog-centered modal-confirm">
                     <div class="modal-content">
                         <div class="modal-header justify-content-center">
                             <div class="icon-box">
