@@ -94,19 +94,13 @@
                             <td><?=$tipoTexto?></td><td><?=$ubicacionTexto?></td><td><?=$incidencia->getTitulo()?></td></td><td><?=$incidencia->getFecha()?></td><td><?=$incidenciaTexto?></td><td><?=$incidencia->getId_usuario()?></td>
                             <td>
                             
-                            <form action="" method="post" id="myForm">
+                            <form action="../Controller/modificarIncidencia.php" method="post" id="myForm">
+                                <input type="hidden" name="tipo" value="<?=$incidencia->getId_tipo()?>">
+                                <input type="hidden" name="ubicacion" value="<?=$incidencia->getId_ubicacion()?>">
                                 <input type="hidden" name="titulo" value="<?=$incidencia->getTitulo()?>">
                                 <input type="hidden" name="descripcion" value="<?=$incidencia->getDescripcion()?>">
-                                <?php
-                                    if (isset($_POST['tipo'])) {
-                                        echo '<input type="hidden" name="tipo" value="'.$_POST["tipo"].'">';
-                                    }
-
-                                    if (isset($_POST['ubicacion'])) {
-                                        echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
-                                    }
-                                ?>
-                                <input type="submit" class="btn btn-success" value="Revisar">
+                                <input type="hidden" name="estado" value="<?=$incidencia->getEstado()?>">
+                                <input type="submit" class="btn btn-success" value="Modificar">
                             </form>
                             
                             </td>    
@@ -146,33 +140,7 @@
                 </div>
             </footer>
 
-            <!-- Modal de revisión de incidencias -->
-            <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="revisionIncidenciaLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"><?php if(isset($_POST['titulo'])) { echo $_POST['titulo']; } ?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <?php if(isset($_POST['titulo'])) { echo $_POST['descripcion']; } ?>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-            <?php if (isset($_POST['titulo'])): ?>
-            <script>
-                $(document).ready(function(){
-                    $('#myModal').modal('show');
-                    e.preventDefault();
-                });
-            </script>
-            <?php endif ?>
 
   </body>
 </html>

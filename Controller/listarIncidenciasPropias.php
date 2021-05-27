@@ -9,8 +9,9 @@ if (!isset($_SESSION['user'])) {
     header("location: ../index.php");
 } else {
         
-    // Obtiene todas las incidencias
-    $data['incidencias'] = Incidencia::getIncidencias();
+    // Obtiene las incidencias del usuario
+    $data['dni'] = $_SESSION['user'];
+    $data['incidencias'] = Incidencia::getIncidenciasByUsuario($data['dni']);
 
     // Obtiene todos los tipos
     $data['tipos'] = Tipo::getTipos();
@@ -22,14 +23,14 @@ if (!isset($_SESSION['user'])) {
 
     if (isset($_POST['tipo'])) {
 
-        $data['incidencias'] = Incidencia::getIncidenciasFiltroTipo($_POST['tipo']);
+        $data['incidencias'] = Incidencia::getIncidenciasByUsuarioFiltroTipo($data['dni'], $_POST['tipo']);
 
     } else if (isset($_POST['ubicacion'])) {
 
-        $data['incidencias'] = Incidencia::getIncidenciasFiltroUbicacion($_POST['ubicacion']);
+        $data['incidencias'] = Incidencia::getIncidenciasByUsuarioFiltroUbicacion($data['dni'], $_POST['ubicacion']);
 
     }
         
-    include '../View/incidencias.php';    
+    include '../View/incidenciasPropias.php';    
 
 }

@@ -32,7 +32,7 @@
                     <div class="row mt-3">
                         <div class="col">
                             <button type="button" class="btn btn-primary" onclick="window.location.href='nuevaIncidencia.php'">Presentar incidencia</button>
-                            <button type="button" class="btn btn-primary">Listar mis incidencias</button>
+                            <button type="button" class="btn btn-primary" onclick="window.location.href='listarIncidenciasPropias.php'">Listar mis incidencias</button>
                             <button type="button" class="btn btn-primary" onclick="window.location.href='listarIncidencias.php'">Listar todas las incidencias</button>
                             <button type="button" class="btn btn-danger" onclick="window.location.href='cerrarSesion.php'">Cerrar sesión</button>
                         </div>
