@@ -37,7 +37,13 @@ class Incidencia{
     }
     public function update() {
         $conexion = ProyectoDB::connectDB();
-        $actualiza = "UPDATE incidencia SET id=\"".$this->id."\", id_tipo=\"".$this->id_tipo."\", id_ubicacion=\"".$this->id_ubicacion."\", titulo=\"".$this->titulo."\", descripcion=\"".$this->descripcion."\", fecha=\"".$this->fecha."\", estado=\"".$this->estado."\", id_usuario=\"".$this->id_usuario."\", id_tecnico=\"".$this->id_tecnico."\" WHERE id=\"".$this->id."\"";
+        $actualiza = "UPDATE incidencia SET id_tipo=\"".$this->id_tipo."\", id_ubicacion=\"".$this->id_ubicacion."\", titulo=\"".$this->titulo."\", descripcion=\"".$this->descripcion."\", fecha=\"".$this->fecha."\", estado=\"".$this->estado."\", id_usuario=\"".$this->id_usuario."\", id_tecnico=\"".$this->id_tecnico."\" WHERE id=\"".$this->id."\"";
+        $conexion->exec($actualiza);
+    }
+
+    public function modificaIncidencia() {
+        $conexion = ProyectoDB::connectDB();
+        $actualiza = "UPDATE incidencia SET id_tipo=\"".$this->id_tipo."\", id_ubicacion=\"".$this->id_ubicacion."\", titulo=\"".$this->titulo."\", descripcion=\"".$this->descripcion."\", fecha=\"".$this->fecha."\", estado=\"".$this->estado."\", id_usuario=\"".$this->id_usuario."\", id_tecnico=".$this->id_tecnico." WHERE id=\"".$this->id."\"";
         $conexion->exec($actualiza);
     }
 

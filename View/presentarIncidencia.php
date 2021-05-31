@@ -127,7 +127,16 @@
                                 <option value="">-- Elige Tipo --</option>
                                 <?php
                                     foreach ($data['tipos'] as $tipo) {
-                                        echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
+
+                                        if (isset($data['tipoId'])) {
+                                            if ($tipo->getId()==$data['tipoId']) {
+                                                echo '<option value="'.$tipo->getId().'" selected="selected">'.$tipo->getNombre().'</option>';
+                                            } else {
+                                                echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
+                                            }
+                                        } else {
+                                            echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
+                                        }
                                     }
                                 ?>
                             </select>
@@ -138,19 +147,65 @@
                                 <option value="">-- Elige Ubicacion --</option>
                                 <?php
                                     foreach ($data['ubicaciones'] as $ubicacion) {
-                                        echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
+
+                                        if (isset($data['ubicacionId'])) {
+
+                                            if ($ubicacion->getId()==$data['ubicacionId']) {
+                                                echo '<option value="'.$ubicacion->getId().'" selected="selected">'.$ubicacion->getNombre().'</option>';
+                                            } else {
+                                                echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
+                                            }
+
+                                        } else {
+                                            echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
+                                        }
                                     }
                                 ?>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="titulo" class="form-label">Titulo: </label>
-                            <input type="text" id="titulo" name="titulo" class="form-control" required placeholder="Escriba el título">
+                            <?php
+
+                                if (isset($data['titulo'])) {
+                                    echo '<input type="text" id="titulo" name="titulo" class="form-control" required placeholder="Escriba el título" value="'.$data['titulo'].'">';
+                                } else {
+                                    echo '<input type="text" id="titulo" name="titulo" class="form-control" required placeholder="Escriba el título">';
+                                }
+
+                            ?>
                         </div>
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripción: </label>
-                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"></textarea>
+                            <?php
+
+                                if (isset($data['descripcion'])) {
+                                    echo '<textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción">'.$data['descripcion'].'</textarea>';
+                                } else {
+                                    echo '<textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"></textarea>';
+                                }
+                            ?>
                         </div>
+
+                        <?php if (isset($data['estado'])): ?>
+
+                            <div class="mb-3">
+
+                                <label for="estado" class="form-label">Estado: </label>
+                                <select required id="estado" name="estado" class="form-select">
+                                    <option value="0">Pendiente</option>
+                                    <option value="2">Resuelto</option>
+                                </select>
+                                <small class="form-text text-muted">
+                                Si dejas el estado como Resuelto, no podrás volver a modificar la incidencia.
+                                </small>
+
+                            </div>
+
+                            <input type="hidden" name="id" value="<?=$data['incidenciaId']?>">
+                            <input type="hidden" name="fecha" value="<?=$data['fecha']?>">
+
+                        <?php endif ?>
 
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.history.back();">Volver</button>
                         <input type="submit" class="btn btn-success" value="Enviar">
@@ -203,13 +258,38 @@
                 </div>
             </div>
 
+            <!-- Modal HTML de Modificación -->
+            <div id="myModalMod" class="modal fade">
+                <div class="modal-dialog modal-dialog-centered modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE876;</i>
+                            </div>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h4>Perfecto!</h4>	
+                            <p>Los cambios se han guardado correctamente.</p>
+                            <button class="btn btn-success" data-dismiss="modal" onclick="window.location.href='../Controller/listarIncidenciasPropias.php'"><span>Continuar</span> <i class="material-icons">&#xE5C8;</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
             <?php if (isset($validacion)): ?>
                 <script>
                 $(document).ready(function(){
                     $('#myModal').modal('show');
-                    e.preventDefault();
+                });
+                </script>
+            <?php endif ?>
+
+            <?php if (isset($validacionMod)): ?>
+                <script>
+                $(document).ready(function(){
+                    $('#myModalMod').modal('show');
                 });
                 </script>
             <?php endif ?>

@@ -70,7 +70,7 @@
 
                     <table class="table table-striped">
                         <tr>
-                        <th>Tipo</th><th>Ubicacion</th><th>Título</th><th>Fecha</th><th>Estado</th><th>Usuario</th><th></th>
+                        <th>Tipo</th><th>Ubicación</th><th>Título</th><th>Fecha</th><th>Estado</th><th>Usuario</th><th></th>
                         </tr>
 
                         <?php
@@ -106,7 +106,7 @@
                                         echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
                                     }
                                 ?>
-                                <input type="submit" class="btn btn-success" value="Revisar">
+                                <input type="submit" class="btn btn-success" value="Detalles">
                             </form>
                             
                             </td>    
@@ -169,7 +169,6 @@
             <script>
                 $(document).ready(function(){
                     $('#myModal').modal('show');
-                    e.preventDefault();
                 });
             </script>
             <?php endif ?>

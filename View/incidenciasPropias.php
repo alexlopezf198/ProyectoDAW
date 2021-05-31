@@ -28,7 +28,7 @@
 
                 <div class="col-12 bg-light p-5 rounded">
 
-                    <h2 class="text-center bg-primary text-light text-uppercase py-2">Lista de incidencias</h2>
+                    <h2 class="text-center bg-primary text-light text-uppercase py-2">Mis incidencias</h2>
 
                     <form action="" method="post">
                         <div class="row mt-3 mb-3">
@@ -70,7 +70,7 @@
 
                     <table class="table table-striped">
                         <tr>
-                        <th>Tipo</th><th>Ubicacion</th><th>Título</th><th>Fecha</th><th>Estado</th><th>Usuario</th><th></th>
+                        <th>Tipo</th><th>Ubicación</th><th>Título</th><th>Fecha</th><th>Estado</th><th></th>
                         </tr>
 
                         <?php
@@ -91,18 +91,24 @@
 
                         ?>
                         <tr>
-                            <td><?=$tipoTexto?></td><td><?=$ubicacionTexto?></td><td><?=$incidencia->getTitulo()?></td></td><td><?=$incidencia->getFecha()?></td><td><?=$incidenciaTexto?></td><td><?=$incidencia->getId_usuario()?></td>
+                            <td><?=$tipoTexto?></td><td><?=$ubicacionTexto?></td><td><?=$incidencia->getTitulo()?></td></td><td><?=$incidencia->getFecha()?></td><td><?=$incidenciaTexto?></td>
                             <td>
+
+                            <?php if ($incidencia->getEstado()!=2): ?>
                             
                             <form action="../Controller/modificarIncidencia.php" method="post" id="myForm">
-                                <input type="hidden" name="tipo" value="<?=$incidencia->getId_tipo()?>">
-                                <input type="hidden" name="ubicacion" value="<?=$incidencia->getId_ubicacion()?>">
-                                <input type="hidden" name="titulo" value="<?=$incidencia->getTitulo()?>">
-                                <input type="hidden" name="descripcion" value="<?=$incidencia->getDescripcion()?>">
-                                <input type="hidden" name="estado" value="<?=$incidencia->getEstado()?>">
+                                <input type="hidden" name="IdData" value="<?=$incidencia->getId()?>">
+                                <input type="hidden" name="tipoData" value="<?=$incidencia->getId_tipo()?>">
+                                <input type="hidden" name="ubicacionData" value="<?=$incidencia->getId_ubicacion()?>">
+                                <input type="hidden" name="tituloData" value="<?=$incidencia->getTitulo()?>">
+                                <input type="hidden" name="descripcionData" value="<?=$incidencia->getDescripcion()?>">
+                                <input type="hidden" name="estadoData" value="<?=$incidencia->getEstado()?>">
+                                <input type="hidden" name="fechaData" value="<?=$incidencia->getFecha()?>">
                                 <input type="submit" class="btn btn-success" value="Modificar">
                             </form>
                             
+                            <?php endif ?>
+
                             </td>    
                         </tr>
                         <?php

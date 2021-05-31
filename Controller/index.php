@@ -33,20 +33,41 @@ if (!isset($_SESSION['user'])) {
         include '../View/acceso.php';
     }
 } else {
-    $usuario = Usuario::getUsuarioById($_SESSION['user']);
+    
+    $data['user'] = Usuario::getUsuariobyId($_SESSION['user']);
+    $data['nombre'] = $data['user']->getNombre();
+    $data['apellidos'] = $data['user']->getApellidos();
 
-    if (!$usuario->getEsTecnico() && !$usuario->getEsAdmin()) {
+    if (!$data['user']->getEsTecnico() && !$data['user']->getEsAdmin()) {
 
         $data['user'] = Usuario::getUsuariobyId($_SESSION['user']);
         $data['nombre'] = $data['user']->getNombre();
         $data['apellidos'] = $data['user']->getApellidos();
         include '../View/cliente.php';
 
-    } else if ($usuario->getEsTecnico() && !$usuario->getEsAdmin()) {
+    } else if ($data['user']->getEsTecnico() && !$data['user']->getEsAdmin()) {
 
-        // include '../View/tecnico.php';
+        if (isset($_SESSION['rol'])) {
 
-    } else if ($usuario->getEsAdmin()) {
+            if ($_SESSION['rol']=="tecnico") {
+                include '../View/tecnico.php';
+            } else if ($_SESSION['rol'] =="cliente") {
+                include '../View/cliente.php';
+            }
+
+        } else {
+
+            if (isset($_POST['rol'])) {
+                $_SESSION['rol'] = $_POST['rol'];
+                header("refresh: 0;");
+            } else {
+                include '../View/selectRol.php';
+            }
+        }
+
+        
+
+    } else if ($data['user']->getEsAdmin()) {
 
         // include '../View/admin.php';
         

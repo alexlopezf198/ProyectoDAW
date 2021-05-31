@@ -275,7 +275,6 @@
                 <script>
                 $(document).ready(function(){
                     $('#myModal').modal('show');
-                    e.preventDefault();
                 });
                 </script>
             <?php endif ?>
