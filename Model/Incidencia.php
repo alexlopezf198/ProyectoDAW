@@ -53,9 +53,76 @@ class Incidencia{
         $conexion->exec($insercion);
     }
 
+    public function atiendeIncidencia($id) {
+        $conexion = ProyectoDB::connectDB();
+        $actualiza = "UPDATE incidencia SET estado=1, id_tecnico=\"".$id."\" WHERE id=\"".$this->id."\"";
+        $conexion->exec($actualiza);
+    }
+
+    public function desatiendeIncidencia() {
+        $conexion = ProyectoDB::connectDB();
+        $actualiza = "UPDATE incidencia SET estado=0, id_tecnico=null WHERE id=\"".$this->id."\"";
+        $conexion->exec($actualiza);
+    }
+
     public static function getIncidencias() {
         $conexion = ProyectoDB::connectDB();
         $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia ORDER BY fecha DESC";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getIncidenciasTramite() {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE NOT estado=2 ORDER BY fecha DESC";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getIncidenciasAtendidas($id) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_tecnico=\"".$id."\" ORDER BY fecha DESC";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getIncidenciasAtendidasFiltroTipo($idTec,$idTip) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_tecnico=\"".$idTec."\" AND id_tipo=\"".$idTip."\" ORDER BY fecha DESC";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getIncidenciasAtendidasFiltroUbicacion($idTec,$idTip) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_tecnico=\"".$idTec."\" AND id_ubicacion=\"".$idTip."\" ORDER BY fecha DESC";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getIncidenciasTramiteFiltroTipo($id) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE NOT estado=2 AND id_tipo=\"".$id."\" ORDER BY fecha DESC";
         $consulta = $conexion->query($seleccion);
         $incidencias = [];
         while ($registro = $consulta->fetchObject()) {

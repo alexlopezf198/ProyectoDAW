@@ -106,7 +106,7 @@
                                         echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
                                     }
                                 ?>
-                                <input type="submit" class="btn btn-success" value="Detalles">
+                                <input type="submit" class="btn btn-dark" value="Detalles">
                             </form>
                             
                             </td>    

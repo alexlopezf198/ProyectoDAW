@@ -20,24 +20,28 @@
                 
             </header>
         
-            <!-- Login -->
+            <!-- Formulario cambio de estado -->
 
             <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
 
                 <div class="col-md-12 bg-light p-5">
 
-                    <h2 class="text-center py-2">Selecciona tu rol:</h2>
+                    <h2 class="text-center py-2">Cambiar estado de la incidencia:</h2>
 
                     <div class="row mt-3">
                         <div class="col d-flex flex-row justify-content-center">
                             <form action="" method="post">
-                                <input type="hidden" name="rol" value="cliente">
-                                <button type="submit" class="btn btn-primary">Cliente</button>
-                            </form>
-                            <form action="" method="post" class="ms-1">
-                                <input type="hidden" name="rol" value="tecnico">
-                                <button type="submit" class="btn btn-primary">Tecnico</button>
+                                <input type="hidden" name="incidenciaId" value="<?=$_POST['incidenciaId']?>">
+                                <select required id="estadoform" name="estadoform" class="form-select">
+                                    <option value="1">En proceso</option>
+                                    <option value="2">Resuelto</option>
+                                </select>
+                                <small class="form-text text-muted">
+                                Si dejas el estado como Resuelto, no podrás volver a modificar la incidencia.
+                                </small><br><br>
+                                <button type="button" class="btn btn-primary" onclick="window.location.href='../Controller/verIncidenciasTecnico.php'">Volver</button>
+                                <input type="submit" class="btn btn-success" value="Enviar">
                             </form>
                         </div>
                     </div>

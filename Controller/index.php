@@ -33,10 +33,20 @@ if (!isset($_SESSION['user'])) {
         include '../View/acceso.php';
     }
 } else {
+
+    // Cambio de rol
+
+    if (isset($_POST['cambiarRol'])) {
+        unset($_SESSION['rol']);
+    }
+
+    // Recupero datos del usuario
     
     $data['user'] = Usuario::getUsuariobyId($_SESSION['user']);
     $data['nombre'] = $data['user']->getNombre();
     $data['apellidos'] = $data['user']->getApellidos();
+
+    // Compruebo los permisos del usuario y le muestro las vistas correspondientes
 
     if (!$data['user']->getEsTecnico() && !$data['user']->getEsAdmin()) {
 

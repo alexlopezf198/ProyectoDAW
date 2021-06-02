@@ -30,11 +30,21 @@
                     <h2 class="text-center py-2">Bienvenido, <?=$data['nombre']?> <?=$data['apellidos']?>.</h2>
 
                     <div class="row mt-3">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='nuevaIncidencia.php'">Presentar incidencia</button>
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='listarIncidenciasPropias.php'">Listar mis incidencias</button>
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='listarIncidencias.php'">Listar todas las incidencias</button>
-                            <button type="button" class="btn btn-danger" onclick="window.location.href='cerrarSesion.php'">Cerrar sesión</button>
+                        <div class="col d-flex flex-lg-row flex-column justify-content-center">
+                            <button type="button" class="btn btn-primary mb-1 mb-lg-0" onclick="window.location.href='nuevaIncidencia.php'">Presentar incidencia</button>
+                            <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='listarIncidenciasPropias.php'">Listar mis incidencias</button>
+                            <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='listarIncidencias.php'">Listar todas las incidencias</button>
+
+                            <?php if (isset($_SESSION['rol'])): ?>
+
+                                <form action="" method="post" class="ms-lg-1 mb-1 mb-lg-0 d-grid gap-2">
+                                    <input type="hidden" name="cambiarRol" value="">
+                                    <button type="submit" class="btn btn-primary">Cambiar rol</button>
+                                </form>
+                                
+                            <?php endif ?>
+
+                            <button type="button" class="btn btn-danger ms-lg-1" onclick="window.location.href='cerrarSesion.php'">Cerrar sesión</button>
                         </div>
                     </div>
 

@@ -205,9 +205,16 @@
                             <input type="hidden" name="id" value="<?=$data['incidenciaId']?>">
                             <input type="hidden" name="fecha" value="<?=$data['fecha']?>">
 
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../Controller/listarIncidenciasPropias.php'">Volver</button>
+
                         <?php endif ?>
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.history.back();">Volver</button>
+                        <?php if (!isset($data['estado'])): ?>
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
+
+                        <?php endif ?>
+
                         <input type="submit" class="btn btn-success" value="Enviar">
                     </form>
 
