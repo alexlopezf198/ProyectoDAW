@@ -35,10 +35,18 @@
                                 <input type="hidden" name="rol" value="cliente">
                                 <button type="submit" class="btn btn-primary">Cliente</button>
                             </form>
-                            <form action="" method="post" class="ms-1">
-                                <input type="hidden" name="rol" value="tecnico">
-                                <button type="submit" class="btn btn-primary">Tecnico</button>
-                            </form>
+                            <?php if ($data['user']->getEsTecnico()): ?>
+                                <form action="" method="post" class="ms-1">
+                                    <input type="hidden" name="rol" value="tecnico">
+                                    <button type="submit" class="btn btn-primary">Tecnico</button>
+                                </form>
+                            <?php endif ?>
+                            <?php if ($data['user']->getEsAdmin()): ?>
+                                <form action="" method="post" class="ms-1">
+                                    <input type="hidden" name="rol" value="admin">
+                                    <button type="submit" class="btn btn-primary">Admin</button>
+                                </form>
+                            <?php endif ?>
                         </div>
                     </div>
 

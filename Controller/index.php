@@ -34,7 +34,7 @@ if (!isset($_SESSION['user'])) {
     }
 } else {
 
-    // Cambio de rol
+    // Cambio de rol (para el botón)
 
     if (isset($_POST['cambiarRol'])) {
         unset($_SESSION['rol']);
@@ -46,7 +46,7 @@ if (!isset($_SESSION['user'])) {
     $data['nombre'] = $data['user']->getNombre();
     $data['apellidos'] = $data['user']->getApellidos();
 
-    // Compruebo los permisos del usuario y le muestro las vistas correspondientes
+    // Compruebo los permisos del usuario y le muestro las vistas correspondientes dependiendo de su rol
 
     if (!$data['user']->getEsTecnico() && !$data['user']->getEsAdmin()) {
 
@@ -79,7 +79,25 @@ if (!isset($_SESSION['user'])) {
 
     } else if ($data['user']->getEsAdmin()) {
 
-        // include '../View/admin.php';
+        if (isset($_SESSION['rol'])) {
+
+            if ($_SESSION['rol']=="admin") {
+                include '../View/admin.php';
+            } else if ($_SESSION['rol'] =="tecnico") {
+                include '../View/tecnico.php';
+            } else if ($_SESSION['rol'] =="cliente") {
+                include '../View/cliente.php';
+            }
+
+        } else {
+
+            if (isset($_POST['rol'])) {
+                $_SESSION['rol'] = $_POST['rol'];
+                header("refresh: 0;");
+            } else {
+                include '../View/selectRol.php';
+            }
+        }
         
     }
     
