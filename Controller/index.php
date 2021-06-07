@@ -14,10 +14,18 @@ if (!isset($_SESSION['user'])) {
             $contraseniaHash = $usuario->getContrasenia();
 
             if (password_verify($contrasenia, $contraseniaHash)) {
-                $_SESSION['user']=$_POST['dni'];
-                $_SESSION['password']=$_POST['password'];
-                // Mensaje login correcto
-                header("refresh: 0;");
+
+                if (!$usuario->getEstaEliminado()) {
+
+                    // Login correcto, almacena la sesión
+                    $_SESSION['user']=$_POST['dni'];
+                    $_SESSION['password']=$_POST['password'];
+                    header("refresh: 0;");
+
+                } else {
+                    $dni_error = "El usuario está dado de baja, contacta con algún administrador.";
+                    include '../View/acceso.php';
+                }
 
             } else {
                 $pass_error = "La contraseña es incorrecta";
@@ -42,7 +50,7 @@ if (!isset($_SESSION['user'])) {
 
     // Recupero datos del usuario
     
-    $data['user'] = Usuario::getUsuariobyId($_SESSION['user']);
+    $data['user'] = Usuario::getUsuarioById($_SESSION['user']);
     $data['nombre'] = $data['user']->getNombre();
     $data['apellidos'] = $data['user']->getApellidos();
 
@@ -50,7 +58,7 @@ if (!isset($_SESSION['user'])) {
 
     if (!$data['user']->getEsTecnico() && !$data['user']->getEsAdmin()) {
 
-        $data['user'] = Usuario::getUsuariobyId($_SESSION['user']);
+        $data['user'] = Usuario::getUsuarioById($_SESSION['user']);
         $data['nombre'] = $data['user']->getNombre();
         $data['apellidos'] = $data['user']->getApellidos();
         include '../View/cliente.php';

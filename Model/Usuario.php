@@ -11,8 +11,9 @@ class Usuario{
     private $contrasenia;
     private $esTecnico;
     private $esAdmin;
+    private $estaEliminado;
 
-    function __construct($dni="", $nombre="", $apellidos="", $email="", $provincia="", $localidad="", $fechaNacimiento="", $contrasenia="", $esTecnico=false, $esAdmin=false) {
+    function __construct($dni="", $nombre="", $apellidos="", $email="", $provincia="", $localidad="", $fechaNacimiento="", $contrasenia="", $esTecnico=0, $esAdmin=0, $estaEliminado=0) {
         
         $this->dni = $dni;
         $this->nombre = $nombre;
@@ -24,12 +25,13 @@ class Usuario{
         $this->contrasenia = $contrasenia;
         $this->esTecnico = $esTecnico;
         $this->esAdmin = $esAdmin;
+        $this->estaEliminado = $estaEliminado;
 
     }
 
     public function insert() {
         $conexion = ProyectoDB::connectDB();
-        $insercion = "INSERT INTO usuario (dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin) VALUES (\"".$this->dni."\", \"".$this->nombre."\", \"".$this->apellidos."\", \"".$this->email."\", \"".$this->provincia."\", \"".$this->localidad."\", \"".$this->fechaNacimiento."\", \"".$this->contrasenia."\", \"".$this->esTecnico."\", \"".$this->esAdmin."\")";
+        $insercion = "INSERT INTO usuario (dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado) VALUES (\"".$this->dni."\", \"".$this->nombre."\", \"".$this->apellidos."\", \"".$this->email."\", \"".$this->provincia."\", \"".$this->localidad."\", \"".$this->fechaNacimiento."\", \"".$this->contrasenia."\", \"".$this->esTecnico."\", \"".$this->esAdmin."\", \"".$this->estaEliminado."\")";
         $conexion->exec($insercion);
     }
     public function delete() {
@@ -39,27 +41,70 @@ class Usuario{
     }
     public function update() {
         $conexion = ProyectoDB::connectDB();
-        $actualiza = "UPDATE usuario SET nombre=\"".$this->nombre."\", apellidos=\"".$this->apellidos."\", email=\"".$this->email."\", provincia=\"".$this->provincia."\", localidad=\"".$this->localidad."\", fechaNacimiento=\"".$this->fechaNacimiento."\", contrasenia=\"".$this->contrasenia."\", esTecnico=\"".$this->esTecnico."\", esAdmin=\"".$this->esAdmin."\" WHERE dni=\"".$this->dni."\"";
+        $actualiza = "UPDATE usuario SET nombre=\"".$this->nombre."\", apellidos=\"".$this->apellidos."\", email=\"".$this->email."\", provincia=\"".$this->provincia."\", localidad=\"".$this->localidad."\", fechaNacimiento=\"".$this->fechaNacimiento."\", contrasenia=\"".$this->contrasenia."\", esTecnico=\"".$this->esTecnico."\", esAdmin=\"".$this->esAdmin."\", estaEliminado=\"".$this->estaEliminado."\" WHERE dni=\"".$this->dni."\"";
+        $conexion->exec($actualiza);
+    }
+    public function eliminarUsuario() {
+        $conexion = ProyectoDB::connectDB();
+        $actualiza = "UPDATE usuario SET estaEliminado=1 WHERE dni=\"".$this->dni."\"";
+        $conexion->exec($actualiza);
+    }
+    public function activarUsuario() {
+        $conexion = ProyectoDB::connectDB();
+        $actualiza = "UPDATE usuario SET estaEliminado=0 WHERE dni=\"".$this->dni."\"";
         $conexion->exec($actualiza);
     }
 
     public static function getUsuarios() {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin FROM usuario ORDER BY apellidos";
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario ORDER BY apellidos";
         $consulta = $conexion->query($seleccion);
         $usuarios = [];
         while ($registro = $consulta->fetchObject()) {
-            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin);
+            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin, $registro->estaEliminado);
+        }
+        return $usuarios;
+    }
+
+    public static function getUsuariosClientes() {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario WHERE esTecnico=0 AND esAdmin=0 ORDER BY apellidos";
+        $consulta = $conexion->query($seleccion);
+        $usuarios = [];
+        while ($registro = $consulta->fetchObject()) {
+            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin, $registro->estaEliminado);
+        }
+        return $usuarios;
+    }
+
+    public static function getUsuariosTecnicos() {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario WHERE esTecnico=1 ORDER BY apellidos";
+        $consulta = $conexion->query($seleccion);
+        $usuarios = [];
+        while ($registro = $consulta->fetchObject()) {
+            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin, $registro->estaEliminado);
+        }
+        return $usuarios;
+    }
+
+    public static function getUsuariosAdmins() {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario WHERE esAdmin=1 ORDER BY apellidos";
+        $consulta = $conexion->query($seleccion);
+        $usuarios = [];
+        while ($registro = $consulta->fetchObject()) {
+            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin, $registro->estaEliminado);
         }
         return $usuarios;
     }
     
     public static function getUsuarioById($id) {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin FROM usuario WHERE dni=\"".$id."\"";
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario WHERE dni=\"".$id."\"";
         $consulta = $conexion->query($seleccion);
         $registro = $consulta->fetchObject();
-        $usuario = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin);
+        $usuario = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin, $registro->estaEliminado);
         return $usuario;
     }
 
@@ -203,6 +248,18 @@ class Usuario{
     public function setEsAdmin($esAdmin)
     {
         $this->esAdmin = $esAdmin;
+
+        return $this;
+    }
+
+    public function getEstaEliminado()
+    {
+        return $this->estaEliminado;
+    }
+
+    public function setEstaEliminado($estaEliminado)
+    {
+        $this->estaEliminado = $estaEliminado;
 
         return $this;
     }

@@ -31,7 +31,7 @@
 
                     <div class="row mt-3">
                         <div class="col d-flex flex-lg-row flex-column justify-content-center">
-                            <button type="button" class="btn btn-primary mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarTecnicos.php'">Gestionar técnicos</button>
+                            <button type="button" class="btn btn-primary mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarUsuarios.php'">Gestionar usuarios</button>
                             <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarTipos.php'">Gestionar tipos</button>
                             <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarUbicaciones.php'">Gestionar ubicaciones</button>
 
