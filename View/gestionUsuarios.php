@@ -8,98 +8,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="../View/css/estilos.css">
-    <link rel="stylesheet" href="../View/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="../View/css/jquery-3.6.0.min.js"></script>
     <title>Sistema de gestión de incidencias</title>
-    <style>
-        .modal-confirm {		
-            color: #434e65;
-            width: 525px;
-        }
-        .modal-confirm .modal-content {
-            padding: 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-        }
-        .modal-confirm .modal-header {
-            background: #47c9a2;
-            border-bottom: none;   
-            position: relative;
-            text-align: center;
-            margin: -20px -20px 0;
-            border-radius: 5px 5px 0 0;
-            padding: 35px;
-        }
-        .modal-confirm h4 {
-            text-align: center;
-            font-size: 36px;
-            margin: 10px 0;
-        }
-        .modal-confirm .form-control, .modal-confirm .btn {
-            min-height: 40px;
-            border-radius: 3px; 
-        }
-        .modal-confirm .close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            color: #fff;
-            text-shadow: none;
-            opacity: 0.5;
-        }
-        .modal-confirm .close:hover {
-            opacity: 0.8;
-        }
-        .modal-confirm .icon-box {
-            color: #fff;		
-            width: 95px;
-            height: 95px;
-            display: inline-block;
-            border-radius: 50%;
-            z-index: 9;
-            border: 5px solid #fff;
-            padding: 15px;
-            text-align: center;
-        }
-        .modal-confirm .icon-box i {
-            font-size: 64px;
-            margin: -4px 0 0 -4px;
-        }
-        .modal-confirm.modal-dialog {
-            margin-top: 80px;
-        }
-        .modal-confirm .btn, .modal-confirm .btn:active {
-            color: #fff;
-            border-radius: 4px;
-            background: #eeb711 !important;
-            text-decoration: none;
-            transition: all 0.4s;
-            line-height: normal;
-            border-radius: 30px;
-            margin-top: 10px;
-            padding: 6px 20px;
-            border: none;
-        }
-        .modal-confirm .btn:hover, .modal-confirm .btn:focus {
-            background: #eda645 !important;
-            outline: none;
-        }
-        .modal-confirm .btn span {
-            margin: 1px 3px 0;
-            float: left;
-        }
-        .modal-confirm .btn i {
-            margin-left: 1px;
-            font-size: 20px;
-            float: right;
-        }
-        .trigger-btn {
-            display: inline-block;
-            margin: 100px auto;
-        }
-    </style>
   </head>
   <body class="h-100">
 
@@ -111,7 +21,7 @@
                 
             </header>
         
-            <!-- Listado de incidencias -->
+            <!-- Listado de usuarios -->
 
             <div class="container h-100">
                 <div class="row h-100 justify-content-center align-items-center">
@@ -304,67 +214,6 @@
                 </div>
             </footer>
 
-            <!-- Modal de revisión de incidencias -->
-            <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="revisionIncidenciaLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"><?php if(isset($_POST['titulo'])) { echo $_POST['titulo']; } ?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <?php if(isset($_POST['titulo'])) { echo $_POST['descripcion']; } ?>
-                        </div>
-                        <div class="modal-footer">
-                            <?php if ($_POST['atendidoTecnico']!=null): ?>
-                                <span class="me-3" style="color:#0d6efd; font-weight:bold;">Atendida por: <?=$_POST['atendidoTecnico']?></span>
-                            <?php endif ?>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal de Atender Incidencia -->
-            <div id="myModal2" class="modal fade">
-                <div class="modal-dialog modal-dialog-centered modal-confirm">
-                    <div class="modal-content">
-                        <div class="modal-header justify-content-center">
-                            <div class="icon-box">
-                                <i class="material-icons">&#xE876;</i>
-                            </div>
-                        </div>
-                        <div class="modal-body text-center">
-                            <h4>Perfecto!</h4>	
-                            <p>La incidencia ha sido atendida correctamente.</p>
-                            <p>Puedes modificar su estado en "Ver incidencias atendidas".</p>
-                            <button class="btn btn-success" data-dismiss="modal" onclick="window.location.href='../Controller/index.php'"><span>Continuar</span> <i class="material-icons">&#xE5C8;</i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-            
-            <!-- Script para lanzar modal de Detalles -->
-
-            <?php if (isset($_POST['titulo'])): ?>
-            <script>
-                $(document).ready(function(){
-                    $('#myModal').modal('show');
-                });
-            </script>
-            <?php endif ?>
-
-            <!-- Script para lanzar modal de Atender -->
-
-            <?php if (isset($validacion)): ?>
-            <script>
-                $(document).ready(function(){
-                    $('#myModal2').modal('show');
-                });
-            </script>
-            <?php endif ?>
-
   </body>
 </html>

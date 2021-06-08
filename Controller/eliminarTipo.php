@@ -9,23 +9,19 @@ if (!isset($_SESSION['user'])) {
     header("location: ../index.php");
 } else {
 
-    $data['user'] = Usuario::getUsuariobyId($_SESSION['user']);
+    $data['user'] = Usuario::getUsuarioById($_SESSION['user']);
     
     if ($data['user']->getEsAdmin()) {
 
-        if (isset($_POST['nombreTipo'])) {
+        if (isset($_POST['tipoId'])) {
 
-            // Obtiene los tipos del filtro Buscar
-            $data['tipos'] = Tipo::getTiposByNombre($_POST['nombreTipo']);
+            $tipoEliminado = Tipo::getTipoById($_POST['tipoId']);
+            $tipoEliminado->eliminarTipo();
+            header("location: ../Controller/gestionarTipos.php");
 
         } else {
-
-            // Obtiene todos los tipos
-            $data['tipos'] = Tipo::getTiposListar();
-
+            header("location: ../index.php");
         }
-
-        include '../View/gestionTipos.php';
 
 
     } else {
