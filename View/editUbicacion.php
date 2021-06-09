@@ -14,57 +14,59 @@
     <script src="../View/css/jquery-3.6.0.min.js"></script>
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
             </header>
         
-            <!-- Login -->
+            <!-- Cuerpo de la web -->
 
-            <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                <div class="col-md-7 bg-light p-5 rounded">
+                    <div class="col-md-7 bg-light p-5 rounded">
 
-                    <h2 class="text-center bg-primary text-light text-uppercase py-2"><?=$data['textoTitulo']?></h2>
+                        <h2 class="text-center bg-primary text-light text-uppercase py-2"><?=$data['textoTitulo']?></h2>
 
-                    <form action="" method="post">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre: </label>
-                            <?php if (isset($data['ubicacionNombre'])): ?>
-                                <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Escriba el nombre" value="<?=$data['ubicacionNombre']?>">
-                            <?php else: ?>
-                                <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Escriba el nombre" value="">
+                        <form action="" method="post">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre: </label>
+                                <?php if (isset($data['ubicacionNombre'])): ?>
+                                    <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Escriba el nombre" value="<?=$data['ubicacionNombre']?>">
+                                <?php else: ?>
+                                    <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Escriba el nombre" value="">
+                                <?php endif ?>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción: </label>
+                                <?php if (isset($data['ubicacionDescripcion'])): ?>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"><?=$data['ubicacionDescripcion']?></textarea>
+                                <?php else: ?>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"></textarea>
+                                <?php endif ?>
+                            </div>
+                            
+                            <?php if (isset($data['ubicacionId'])): ?>
+                                <input type="hidden" name="id" value="<?=$data['ubicacionId']?>">
+                                <input type="hidden" name="estaEliminado" value="<?=$data['ubicacionEstaEliminado']?>">
                             <?php endif ?>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="descripcion" class="form-label">Descripción: </label>
-                            <?php if (isset($data['ubicacionDescripcion'])): ?>
-                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"><?=$data['ubicacionDescripcion']?></textarea>
-                            <?php else: ?>
-                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"></textarea>
-                            <?php endif ?>
-                        </div>
-                        
-                        <?php if (isset($data['ubicacionId'])): ?>
-                            <input type="hidden" name="id" value="<?=$data['ubicacionId']?>">
-                            <input type="hidden" name="estaEliminado" value="<?=$data['ubicacionEstaEliminado']?>">
-                        <?php endif ?>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../Controller/gestionarUbicaciones.php'">Volver</button>
+                            <input type="submit" class="btn btn-success" value="Enviar">
+                        </form>
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../Controller/gestionarUbicaciones.php'">Volver</button>
-                        <input type="submit" class="btn btn-success" value="Enviar">
-                    </form>
+                    </div>
 
                 </div>
-
-            </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

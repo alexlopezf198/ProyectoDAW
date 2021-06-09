@@ -14,173 +14,187 @@
     <script src="../View/css/jquery-3.6.0.min.js"></script>
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
             </header>
         
-            <!-- Listado de incidencias -->
-
-            <div class="container h-100">
-                <div class="row h-100 justify-content-center align-items-center">
-
-                    <div class="col-12 bg-light p-5 rounded">
-
-                        <h2 class="text-center bg-primary text-light text-uppercase py-2">Incidencias atendidas</h2>
-
-                        <form action="" method="post">
-                            <div class="row mt-3 mb-3">
-                                <label for="tipo" class="col-sm-1 col-form-label">Tipo: </label>
-                                <div class="col-3">
-                                    <select required id="tipo" name="tipo" class="form-select">
-                                        <option value="">-- Elige Tipo --</option>
-                                        <?php
-                                            foreach ($data['tipos'] as $tipo) {
-                                                echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                <input type="submit" class="btn btn-primary" value="Filtrar">
-                                </div>
-                            </div>
-                        </form>
-
-                        <form action="" method="post">
-                            <div class="row mt-3 mb-3">
-                                <label for="ubicacion" class="col-sm-1 col-form-label">Ubicación: </label>
-                                <div class="col-3">
-                                    <select required id="ubicacion" name="ubicacion" class="form-select">
-                                        <option value="">-- Elige Ubicación --</option>
-                                        <?php
-                                            foreach ($data['ubicaciones'] as $ubicacion) {
-                                                echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                <input type="submit" class="btn btn-primary" value="Filtrar">
-                                </div>
-                            </div>
-                        </form>
-
-                        <div class="table-responsive-lg mb-2">
-
-                            <table class="table table-striped">
-                                <tr>
-                                <th>Tipo</th><th>Ubicación</th><th>Título</th><th>Fecha</th><th>Estado</th><th>Usuario</th><th></th><th></th><th></th>
-                                </tr>
-
-                                <?php
-                                foreach ($data['incidencias'] as $incidencia) {
-
-                                    if ($incidencia->getEstado()==0) {
-                                        $incidenciaTexto = "Pendiente";
-                                    } else if ($incidencia->getEstado()==1) {
-                                        $incidenciaTexto = "En proceso";
-                                    } else if ($incidencia->getEstado()==2) {
-                                        $incidenciaTexto = "Resuelto";
-                                    }
-
-                                    $tipo = Tipo::getTipoById($incidencia->getId_tipo());
-                                    $tipoTexto = $tipo->getNombre();
-                                    $ubicacion = Ubicacion::getUbicacionById($incidencia->getId_ubicacion());
-                                    $ubicacionTexto = $ubicacion->getNombre();
-
-                                ?>
-                                <tr>
-                                    <td><?=$tipoTexto?></td><td><?=$ubicacionTexto?></td><td><?=$incidencia->getTitulo()?></td></td><td><?=$incidencia->getFecha()?></td><td><?=$incidenciaTexto?></td><td><?=$incidencia->getId_usuario()?></td>
-                                    <td>
-                                    
-                                    <form action="" method="post" id="myForm">
-                                        <input type="hidden" name="titulo" value="<?=$incidencia->getTitulo()?>">
-                                        <input type="hidden" name="descripcion" value="<?=$incidencia->getDescripcion()?>">
-                                        <input type="hidden" name="atendidoTecnico" value="<?=$incidencia->getId_tecnico()?>">
-                                        <?php
-
-                                            // Este código es para que cuando hagas click en el botón no se pierda el filtro aplicado
-
-                                            if (isset($_POST['tipo'])) {
-                                                echo '<input type="hidden" name="tipo" value="'.$_POST["tipo"].'">';
-                                            }
-
-                                            if (isset($_POST['ubicacion'])) {
-                                                echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
-                                            }
-                                        ?>
-                                        <input type="submit" class="btn btn-dark" value="Detalles">
-                                    </form>
-                                    
-                                    </td>
-                                    <td>
-                                            
-                                        <?php if ($incidencia->getEstado()!=2): ?>
-
-                                            <form action="../Controller/cambiarEstadoIncidencia.php" method="post" id="myForm2">
-                                                <input type="hidden" name="incidenciaId" value="<?=$incidencia->getId()?>">
-                                                <?php
-
-                                                    // Este código es para que cuando hagas click en el botón no se pierda el filtro aplicado
-
-                                                    if (isset($_POST['tipo'])) {
-                                                        echo '<input type="hidden" name="tipo" value="'.$_POST["tipo"].'">';
-                                                    }
-
-                                                    if (isset($_POST['ubicacion'])) {
-                                                        echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
-                                                    }
-                                                ?>
-                                                <input type="submit" class="btn btn-success" value="Cambiar estado">
-                                            </form>
-
-                                        <?php endif ?>
-
-                                    </td>
-                                    <td>
-
-                                        <?php if ($incidencia->getEstado()!=2): ?>
+            <!-- Cuerpo de la web -->
             
-                                            <form action="../Controller/abandonarIncidencia.php" method="post" id="myForm2">
-                                                <input type="hidden" name="incidenciaId" value="<?=$incidencia->getId()?>">
-                                                <?php
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                                                    // Este código es para que cuando hagas click en el botón no se pierda el filtro aplicado
+                        <div class="col-12 bg-light p-5 rounded">
 
-                                                    if (isset($_POST['tipo'])) {
-                                                        echo '<input type="hidden" name="tipo" value="'.$_POST["tipo"].'">';
-                                                    }
+                            <h2 class="text-center bg-primary text-light text-uppercase py-2">Incidencias atendidas</h2>
 
-                                                    if (isset($_POST['ubicacion'])) {
-                                                        echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
-                                                    }
-                                                ?>
-                                                <input type="submit" class="btn btn-danger" value="Abandonar">
-                                            </form>
+                            <div class="row mt-3 mb-3">
+                                <form action="" method="post">
+                                        
+                                        <div class="col d-flex flex-row align-items-center">
+                                            <div class="col-lg-1 col-sm-2 col-3">
+                                                <label for="tipo" class="form-label">Tipo: </label>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-5">
+                                                <select required id="tipo" name="tipo" class="form-select">
+                                                    <option value="">-- Elige Tipo --</option>
+                                                    <?php
+                                                        foreach ($data['tipos'] as $tipo) {
+                                                            echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 ms-3 col-sm-5">
+                                            <input type="submit" class="btn btn-primary" value="Filtrar">
+                                            </div>
+                                        </div>
+                                        
+                                </form>
+                            </div>
 
-                                        <?php endif ?>
-                                    
-                                    </td>  
-                                </tr>
-                                <?php
-                                }
-                                ?>
+                            <div class="row mt-3 mb-3">
+                                <form action="" method="post">
+                                        
+                                        <div class="col d-flex flex-row align-items-center">
+                                            <div class="col-lg-1 col-sm-2 col-3">
+                                                <label for="ubicacion" class="form-label">Ubicación: </label>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-5">
+                                                <select required id="ubicacion" name="ubicacion" class="form-select">
+                                                    <option value="">-- Elige Ubicación --</option>
+                                                    <?php
+                                                        foreach ($data['ubicaciones'] as $ubicacion) {
+                                                            echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 ms-3 col-sm-5">
+                                            <input type="submit" class="btn btn-primary" value="Filtrar">
+                                            </div>
+                                        </div>
+                                        
+                                </form>
+                            </div>
 
-                            </table>
+                            <div class="table-responsive-lg mb-2">
+
+                                <table class="table table-striped">
+                                    <tr>
+                                    <th>Tipo</th><th>Ubicación</th><th>Título</th><th>Fecha</th><th>Estado</th><th>Usuario</th><th></th><th></th><th></th>
+                                    </tr>
+
+                                    <?php
+                                    foreach ($data['incidencias'] as $incidencia) {
+
+                                        if ($incidencia->getEstado()==0) {
+                                            $incidenciaTexto = "Pendiente";
+                                        } else if ($incidencia->getEstado()==1) {
+                                            $incidenciaTexto = "En proceso";
+                                        } else if ($incidencia->getEstado()==2) {
+                                            $incidenciaTexto = "Resuelto";
+                                        }
+
+                                        $tipo = Tipo::getTipoById($incidencia->getId_tipo());
+                                        $tipoTexto = $tipo->getNombre();
+                                        $ubicacion = Ubicacion::getUbicacionById($incidencia->getId_ubicacion());
+                                        $ubicacionTexto = $ubicacion->getNombre();
+
+                                    ?>
+                                    <tr>
+                                        <td><?=$tipoTexto?></td><td><?=$ubicacionTexto?></td><td><?=$incidencia->getTitulo()?></td></td><td><?=$incidencia->getFecha()?></td><td><?=$incidenciaTexto?></td><td><?=$incidencia->getId_usuario()?></td>
+                                        <td>
+                                        
+                                        <form action="" method="post" id="myForm">
+                                            <input type="hidden" name="titulo" value="<?=$incidencia->getTitulo()?>">
+                                            <input type="hidden" name="descripcion" value="<?=$incidencia->getDescripcion()?>">
+                                            <input type="hidden" name="atendidoTecnico" value="<?=$incidencia->getId_tecnico()?>">
+                                            <?php
+
+                                                // Este código es para que cuando hagas click en el botón no se pierda el filtro aplicado
+
+                                                if (isset($_POST['tipo'])) {
+                                                    echo '<input type="hidden" name="tipo" value="'.$_POST["tipo"].'">';
+                                                }
+
+                                                if (isset($_POST['ubicacion'])) {
+                                                    echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
+                                                }
+                                            ?>
+                                            <input type="submit" class="btn btn-dark" value="Detalles">
+                                        </form>
+                                        
+                                        </td>
+                                        <td>
+                                                
+                                            <?php if ($incidencia->getEstado()!=2): ?>
+
+                                                <form action="../Controller/cambiarEstadoIncidencia.php" method="post" id="myForm2">
+                                                    <input type="hidden" name="incidenciaId" value="<?=$incidencia->getId()?>">
+                                                    <?php
+
+                                                        // Este código es para que cuando hagas click en el botón no se pierda el filtro aplicado
+
+                                                        if (isset($_POST['tipo'])) {
+                                                            echo '<input type="hidden" name="tipo" value="'.$_POST["tipo"].'">';
+                                                        }
+
+                                                        if (isset($_POST['ubicacion'])) {
+                                                            echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
+                                                        }
+                                                    ?>
+                                                    <input type="submit" class="btn btn-success" value="Cambiar estado">
+                                                </form>
+
+                                            <?php endif ?>
+
+                                        </td>
+                                        <td>
+
+                                            <?php if ($incidencia->getEstado()!=2): ?>
+                
+                                                <form action="../Controller/abandonarIncidencia.php" method="post" id="myForm2">
+                                                    <input type="hidden" name="incidenciaId" value="<?=$incidencia->getId()?>">
+                                                    <?php
+
+                                                        // Este código es para que cuando hagas click en el botón no se pierda el filtro aplicado
+
+                                                        if (isset($_POST['tipo'])) {
+                                                            echo '<input type="hidden" name="tipo" value="'.$_POST["tipo"].'">';
+                                                        }
+
+                                                        if (isset($_POST['ubicacion'])) {
+                                                            echo '<input type="hidden" name="ubicacion" value="'.$_POST["ubicacion"].'">';
+                                                        }
+                                                    ?>
+                                                    <input type="submit" class="btn btn-danger" value="Abandonar">
+                                                </form>
+
+                                            <?php endif ?>
+                                        
+                                        </td>  
+                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
+
+                                </table>
+
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
 
                         </div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
-
-                    </div>
 
                 </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

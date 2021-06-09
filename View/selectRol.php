@@ -10,51 +10,53 @@
     <link rel="stylesheet" href="../View/css/estilos.css">
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
             </header>
         
-            <!-- Login -->
+            <!-- Cuerpo de la web -->
 
-            <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                <div class="col-md-12 bg-light p-5">
+                    <div class="col-md-12 bg-light p-5">
 
-                    <h2 class="text-center py-2">Selecciona tu rol:</h2>
+                        <h2 class="text-center py-2">Selecciona tu rol:</h2>
 
-                    <div class="row mt-3">
-                        <div class="col d-flex flex-row justify-content-center">
-                            <form action="" method="post">
-                                <input type="hidden" name="rol" value="cliente">
-                                <button type="submit" class="btn btn-primary">Cliente</button>
-                            </form>
-                            <?php if ($data['user']->getEsTecnico()): ?>
-                                <form action="" method="post" class="ms-1">
-                                    <input type="hidden" name="rol" value="tecnico">
-                                    <button type="submit" class="btn btn-primary">Tecnico</button>
+                        <div class="row mt-3">
+                            <div class="col d-flex flex-row justify-content-center">
+                                <form action="" method="post">
+                                    <input type="hidden" name="rol" value="cliente">
+                                    <button type="submit" class="btn btn-primary">Cliente</button>
                                 </form>
-                            <?php endif ?>
-                            <?php if ($data['user']->getEsAdmin()): ?>
-                                <form action="" method="post" class="ms-1">
-                                    <input type="hidden" name="rol" value="admin">
-                                    <button type="submit" class="btn btn-primary">Admin</button>
-                                </form>
-                            <?php endif ?>
+                                <?php if ($data['user']->getEsTecnico()): ?>
+                                    <form action="" method="post" class="ms-1">
+                                        <input type="hidden" name="rol" value="tecnico">
+                                        <button type="submit" class="btn btn-primary">Tecnico</button>
+                                    </form>
+                                <?php endif ?>
+                                <?php if ($data['user']->getEsAdmin()): ?>
+                                    <form action="" method="post" class="ms-1">
+                                        <input type="hidden" name="rol" value="admin">
+                                        <button type="submit" class="btn btn-primary">Admin</button>
+                                    </form>
+                                <?php endif ?>
+                            </div>
                         </div>
+
                     </div>
+                        
 
                 </div>
-                    
-
-            </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

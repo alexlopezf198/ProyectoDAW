@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="../View/css/estilos.css">
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
@@ -22,45 +22,47 @@
         
             <!-- Login -->
 
-            <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                <div class="col-md-7 bg-light p-5 rounded">
+                    <div class="col-md-7 bg-light p-5 rounded">
 
-                    <h2 class="text-center bg-primary text-light text-uppercase py-2">Panel de login</h2>
+                        <h2 class="text-center bg-primary text-light text-uppercase py-2">Panel de login</h2>
 
-                    <form action="" method="post">
-                        <div class="mb-3">
-                        <label for="dni" class="form-label">Usuario: </label>
-                        <input type="text" id="dni" name="dni" class="form-control <?php if (isset($dni_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba su DNI">
-                            <?php if (isset($dni_error)): ?>
-                                    <div class="invalid-feedback">
-                                        <?php echo $dni_error; ?>
-                                    </div>
-                            <?php endif ?>
-                        </div>
-                        <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña: </label>
-                        <input type="password" id="password" name="password" class="form-control <?php if (isset($pass_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba contraseña">
-                            <?php if (isset($pass_error)): ?>
-                                    <div class="invalid-feedback">
-                                        <?php echo $pass_error; ?>
-                                    </div>
-                            <?php endif ?>
-                        </div>
-                        <div class="mb-3">
-                        <label for="recordar" class="form-check-label">Recordar</label>
-                        <input type="checkbox" id="recordar" name="recordar" class="form-check-input">
-                        </div>
+                        <form action="" method="post">
+                            <div class="mb-3">
+                            <label for="dni" class="form-label">Usuario: </label>
+                            <input type="text" id="dni" name="dni" class="form-control <?php if (isset($dni_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba su DNI">
+                                <?php if (isset($dni_error)): ?>
+                                        <div class="invalid-feedback">
+                                            <?php echo $dni_error; ?>
+                                        </div>
+                                <?php endif ?>
+                            </div>
+                            <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña: </label>
+                            <input type="password" id="password" name="password" class="form-control <?php if (isset($pass_error)): ?> is-invalid <?php endif ?>" required placeholder="Escriba contraseña">
+                                <?php if (isset($pass_error)): ?>
+                                        <div class="invalid-feedback">
+                                            <?php echo $pass_error; ?>
+                                        </div>
+                                <?php endif ?>
+                            </div>
+                            <div class="mb-3">
+                            <label for="recordar" class="form-check-label">Recordar</label>
+                            <input type="checkbox" id="recordar" name="recordar" class="form-check-input">
+                            </div>
 
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="window.location.href='registrarse.php'">Registrarse</button>
-                        <input type="submit" class="btn btn-success" value="Iniciar sesión">
-                    </form>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="window.location.href='registrarse.php'">Registrarse</button>
+                            <input type="submit" class="btn btn-success" value="Iniciar sesión">
+                        </form>
+
+                    </div>
 
                 </div>
-
-            </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

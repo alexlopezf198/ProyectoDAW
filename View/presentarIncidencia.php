@@ -14,127 +14,129 @@
     <script src="../View/css/jquery-3.6.0.min.js"></script>
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
             </header>
         
-            <!-- Login -->
+            <!-- Cuerpo de la web -->
 
-            <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                <div class="col-md-7 bg-light p-5 rounded">
+                    <div class="col-md-7 bg-light p-5 rounded">
 
-                    <h2 class="text-center bg-primary text-light text-uppercase py-2"><?=$data['textoTitulo']?></h2>
+                        <h2 class="text-center bg-primary text-light text-uppercase py-2"><?=$data['textoTitulo']?></h2>
 
-                    <form action="" method="post" id="myForm">
-                        <div class="mb-3">
-                            <label for="tipo" class="form-label">Tipo: </label>
-                            <select required id="tipo" name="tipo" class="form-select">
-                                <option value="">-- Elige Tipo --</option>
-                                <?php
-                                    foreach ($data['tipos'] as $tipo) {
+                        <form action="" method="post" id="myForm">
+                            <div class="mb-3">
+                                <label for="tipo" class="form-label">Tipo: </label>
+                                <select required id="tipo" name="tipo" class="form-select">
+                                    <option value="">-- Elige Tipo --</option>
+                                    <?php
+                                        foreach ($data['tipos'] as $tipo) {
 
-                                        if (isset($data['tipoId'])) {
-                                            if ($tipo->getId()==$data['tipoId']) {
-                                                echo '<option value="'.$tipo->getId().'" selected="selected">'.$tipo->getNombre().'</option>';
+                                            if (isset($data['tipoId'])) {
+                                                if ($tipo->getId()==$data['tipoId']) {
+                                                    echo '<option value="'.$tipo->getId().'" selected="selected">'.$tipo->getNombre().'</option>';
+                                                } else {
+                                                    echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
+                                                }
                                             } else {
                                                 echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
                                             }
-                                        } else {
-                                            echo '<option value="'.$tipo->getId().'">'.$tipo->getNombre().'</option>';
                                         }
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ubicacion" class="form-label">Ubicación: </label>
-                            <select required id="ubicacion" name="ubicacion" class="form-select">
-                                <option value="">-- Elige Ubicacion --</option>
-                                <?php
-                                    foreach ($data['ubicaciones'] as $ubicacion) {
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ubicacion" class="form-label">Ubicación: </label>
+                                <select required id="ubicacion" name="ubicacion" class="form-select">
+                                    <option value="">-- Elige Ubicacion --</option>
+                                    <?php
+                                        foreach ($data['ubicaciones'] as $ubicacion) {
 
-                                        if (isset($data['ubicacionId'])) {
+                                            if (isset($data['ubicacionId'])) {
 
-                                            if ($ubicacion->getId()==$data['ubicacionId']) {
-                                                echo '<option value="'.$ubicacion->getId().'" selected="selected">'.$ubicacion->getNombre().'</option>';
+                                                if ($ubicacion->getId()==$data['ubicacionId']) {
+                                                    echo '<option value="'.$ubicacion->getId().'" selected="selected">'.$ubicacion->getNombre().'</option>';
+                                                } else {
+                                                    echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
+                                                }
+
                                             } else {
                                                 echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
                                             }
-
-                                        } else {
-                                            echo '<option value="'.$ubicacion->getId().'">'.$ubicacion->getNombre().'</option>';
                                         }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Titulo: </label>
+                                <?php
+
+                                    if (isset($data['titulo'])) {
+                                        echo '<input type="text" id="titulo" name="titulo" class="form-control" required placeholder="Escriba el título" value="'.$data['titulo'].'">';
+                                    } else {
+                                        echo '<input type="text" id="titulo" name="titulo" class="form-control" required placeholder="Escriba el título">';
+                                    }
+
+                                ?>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción: </label>
+                                <?php
+
+                                    if (isset($data['descripcion'])) {
+                                        echo '<textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción">'.$data['descripcion'].'</textarea>';
+                                    } else {
+                                        echo '<textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"></textarea>';
                                     }
                                 ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="titulo" class="form-label">Titulo: </label>
-                            <?php
-
-                                if (isset($data['titulo'])) {
-                                    echo '<input type="text" id="titulo" name="titulo" class="form-control" required placeholder="Escriba el título" value="'.$data['titulo'].'">';
-                                } else {
-                                    echo '<input type="text" id="titulo" name="titulo" class="form-control" required placeholder="Escriba el título">';
-                                }
-
-                            ?>
-                        </div>
-                        <div class="mb-3">
-                            <label for="descripcion" class="form-label">Descripción: </label>
-                            <?php
-
-                                if (isset($data['descripcion'])) {
-                                    echo '<textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción">'.$data['descripcion'].'</textarea>';
-                                } else {
-                                    echo '<textarea class="form-control" id="descripcion" name="descripcion" rows="3" required placeholder="Escriba la descripción"></textarea>';
-                                }
-                            ?>
-                        </div>
-
-                        <?php if (isset($data['estado'])): ?>
-
-                            <div class="mb-3">
-
-                                <label for="estado" class="form-label">Estado: </label>
-                                <select required id="estado" name="estado" class="form-select">
-                                    <option value="0">Pendiente</option>
-                                    <option value="2">Resuelto</option>
-                                </select>
-                                <small class="form-text text-muted">
-                                Si dejas el estado como Resuelto, no podrás volver a modificar la incidencia.
-                                </small>
-
                             </div>
 
-                            <input type="hidden" name="id" value="<?=$data['incidenciaId']?>">
-                            <input type="hidden" name="fecha" value="<?=$data['fecha']?>">
+                            <?php if (isset($data['estado'])): ?>
 
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../Controller/listarIncidenciasPropias.php'">Volver</button>
+                                <div class="mb-3">
 
-                        <?php endif ?>
+                                    <label for="estado" class="form-label">Estado: </label>
+                                    <select required id="estado" name="estado" class="form-select">
+                                        <option value="0">Pendiente</option>
+                                        <option value="2">Resuelto</option>
+                                    </select>
+                                    <small class="form-text text-muted">
+                                    Si dejas el estado como Resuelto, no podrás volver a modificar la incidencia.
+                                    </small>
 
-                        <?php if (!isset($data['estado'])): ?>
+                                </div>
 
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
+                                <input type="hidden" name="id" value="<?=$data['incidenciaId']?>">
+                                <input type="hidden" name="fecha" value="<?=$data['fecha']?>">
 
-                        <?php endif ?>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../Controller/listarIncidenciasPropias.php'">Volver</button>
 
-                        <input type="submit" class="btn btn-success" value="Enviar">
-                    </form>
+                            <?php endif ?>
+
+                            <?php if (!isset($data['estado'])): ?>
+
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
+
+                            <?php endif ?>
+
+                            <input type="submit" class="btn btn-success" value="Enviar">
+                        </form>
+
+                    </div>
 
                 </div>
-
-            </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

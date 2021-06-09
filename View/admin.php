@@ -10,49 +10,51 @@
     <link rel="stylesheet" href="../View/css/estilos.css">
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
             </header>
         
-            <!-- Login -->
+            <!-- Cuerpo de la web -->
 
-            <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                <div class="col-md-12 bg-light p-5">
+                    <div class="col-md-12 bg-light p-5">
 
-                    <h2 class="text-center py-2">Bienvenido, <?=$data['nombre']?> <?=$data['apellidos']?>.</h2>
+                        <h2 class="text-center py-2">Bienvenido, <?=$data['nombre']?> <?=$data['apellidos']?>.</h2>
 
-                    <div class="row mt-3">
-                        <div class="col d-flex flex-lg-row flex-column justify-content-center">
-                            <button type="button" class="btn btn-primary mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarUsuarios.php'">Gestionar usuarios</button>
-                            <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarTipos.php'">Gestionar tipos</button>
-                            <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarUbicaciones.php'">Gestionar ubicaciones</button>
+                        <div class="row mt-3">
+                            <div class="col d-flex flex-lg-row flex-column justify-content-center">
+                                <button type="button" class="btn btn-primary mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarUsuarios.php'">Gestionar usuarios</button>
+                                <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarTipos.php'">Gestionar tipos</button>
+                                <button type="button" class="btn btn-primary ms-lg-1 mb-1 mb-lg-0" onclick="window.location.href='../Controller/gestionarUbicaciones.php'">Gestionar ubicaciones</button>
 
-                            <?php if (isset($_SESSION['rol'])): ?>
+                                <?php if (isset($_SESSION['rol'])): ?>
 
-                                <form action="" method="post" class="ms-lg-1 mb-1 mb-lg-0 d-grid gap-2">
-                                    <input type="hidden" name="cambiarRol" value="">
-                                    <button type="submit" class="btn btn-primary">Cambiar rol</button>
-                                </form>
-                                
-                            <?php endif ?>
+                                    <form action="" method="post" class="ms-lg-1 mb-1 mb-lg-0 d-grid gap-2">
+                                        <input type="hidden" name="cambiarRol" value="">
+                                        <button type="submit" class="btn btn-primary">Cambiar rol</button>
+                                    </form>
+                                    
+                                <?php endif ?>
 
-                            <button type="button" class="btn btn-danger ms-lg-1" onclick="window.location.href='cerrarSesion.php'">Cerrar sesión</button>
+                                <button type="button" class="btn btn-danger ms-lg-1" onclick="window.location.href='cerrarSesion.php'">Cerrar sesión</button>
+                            </div>
                         </div>
+
                     </div>
+                        
 
                 </div>
-                    
-
-            </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

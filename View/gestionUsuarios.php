@@ -11,185 +11,187 @@
     <script src="../View/css/jquery-3.6.0.min.js"></script>
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
             </header>
         
-            <!-- Listado de usuarios -->
+            <!-- Cuerpo de la web -->
 
-            <div class="container h-100">
-                <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                    <div class="col-12 bg-light p-5 rounded">
+                        <div class="col-12 bg-light p-5 rounded">
 
-                        <h2 class="text-center bg-primary text-light text-uppercase py-2">Gestión de usuarios</h2>
+                            <h2 class="text-center bg-primary text-light text-uppercase py-2">Gestión de usuarios</h2>
 
-                        <div class="row mt-3 mb-3">
-                        <form action="" method="post">
-                                
-                                <div class="col d-flex flex-row align-items-center">
-                                    <div class="col-lg-1 col-sm-2 col-3">
-                                        <label for="dniUsuario" class="form-label">Usuario: </label>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-4">
-                                    <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" required placeholder="Escriba el DNI">
-                                    </div>
-                                    <div class="col-lg-4 ms-3 col-sm-5">
-                                    <input type="submit" class="btn btn-primary" value="Buscar">
-                                    </div>
-                                </div>
-                                
-                        </form>
-                        </div>
-
-                        <div class="row mt-3 mb-3">
-                        <form action="" method="post">
-                                
-                                <div class="col d-flex flex-row align-items-center">
-                                    <div class="col-lg-1 col-sm-2 col-3">
-                                        <label for="grupo" class="form-label">Grupo: </label>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-4">
-                                        <select required id="grupo" name="grupo" class="form-select">
-                                            <option value="">-- Elige Grupo --</option>
-                                            <option value="clientes">Clientes</option>
-                                            <option value="tecnicos">Técnicos</option>
-                                            <option value="administradores">Administradores</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 ms-3 col-sm-5">
-                                    <input type="submit" class="btn btn-primary" value="Filtrar">
-                                    </div>
-                                </div>
-                                
-                        </form>
-                        </div>
-                        
-
-                        <div class="table-responsive mb-2 mb-lg-0">
-
-                            <table class="table table-striped">
-                                <tr>
-                                <th>Nombre</th><th>Apellidos</th><th>DNI</th><th>Email</th><th>Provincia</th><th>Localidad</th><th>Fecha de nacimiento</th><th></th><th></th>
-                                </tr>
-
-                                <?php
-                                // Añado un if para controlar si hay 1 usuario o más de cara al uso del foreach (cuando se usa el botón Buscar)
-                                if (!isset($usuario)) {
-
-                                foreach ($data['usuarios'] as $usuario) {
-
-                                ?>
-                                <tr>
-                                    <td><?=$usuario->getNombre()?></td><td><?=$usuario->getApellidos()?></td><td><?=$usuario->getDni()?></td></td><td><?=$usuario->getEmail()?></td><td><?=$usuario->getProvincia()?></td><td><?=$usuario->getLocalidad()?></td><td><?=$usuario->getFechaNacimiento()?></td>
-                                    <td>
-
-                                        <form action="../Controller/modificarUsuario.php" method="post">
-                                            <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
-                                            <input type="hidden" name="usuarioNombre" value="<?=$usuario->getNombre()?>">
-                                            <input type="hidden" name="usuarioApellidos" value="<?=$usuario->getApellidos()?>">
-                                            <input type="hidden" name="usuarioEmail" value="<?=$usuario->getEmail()?>">
-                                            <input type="hidden" name="usuarioProvincia" value="<?=$usuario->getProvincia()?>">
-                                            <input type="hidden" name="usuarioLocalidad" value="<?=$usuario->getLocalidad()?>">
-                                            <input type="hidden" name="usuarioFecha" value="<?=$usuario->getFechaNacimiento()?>">
-                                            <input type="hidden" name="usuarioContrasenia" value="<?=$usuario->getContrasenia()?>">
-                                            <input type="hidden" name="usuarioEsTecnico" value="<?=$usuario->getEsTecnico()?>">
-                                            <input type="hidden" name="usuarioEsAdmin" value="<?=$usuario->getEsAdmin()?>">
-                                            <input type="hidden" name="usuarioEstaEliminado" value="<?=$usuario->getEstaEliminado()?>">
-                                            <input type="submit" class="btn btn-primary" value="Modificar">
-                                        </form>
+                            <div class="row mt-3 mb-3">
+                            <form action="" method="post">
                                     
-                                    </td>
-
-                                    <?php if(!$usuario->getEstaEliminado()): ?>
-
-                                    <td>
-
-                                        <form action="../Controller/eliminarUsuario.php" method="post">
-                                            <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
-                                            <input type="submit" class="btn btn-danger" value="Eliminar">
-                                        </form>
+                                    <div class="col d-flex flex-row align-items-center">
+                                        <div class="col-lg-1 col-sm-2 col-3">
+                                            <label for="dniUsuario" class="form-label">Usuario: </label>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-5">
+                                        <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" required placeholder="Escriba el DNI">
+                                        </div>
+                                        <div class="col-lg-4 ms-3 col-sm-5">
+                                        <input type="submit" class="btn btn-primary" value="Buscar">
+                                        </div>
+                                    </div>
                                     
-                                    </td>
+                            </form>
+                            </div>
 
-                                    <?php endif ?>
+                            <div class="row mt-3 mb-3">
+                            <form action="" method="post">
+                                    
+                                    <div class="col d-flex flex-row align-items-center">
+                                        <div class="col-lg-1 col-sm-2 col-3">
+                                            <label for="grupo" class="form-label">Grupo: </label>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-5">
+                                            <select required id="grupo" name="grupo" class="form-select">
+                                                <option value="">-- Elige Grupo --</option>
+                                                <option value="clientes">Clientes</option>
+                                                <option value="tecnicos">Técnicos</option>
+                                                <option value="administradores">Administradores</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 ms-3 col-sm-5">
+                                        <input type="submit" class="btn btn-primary" value="Filtrar">
+                                        </div>
+                                    </div>
+                                    
+                            </form>
+                            </div>
+                            
 
-                                    <?php if($usuario->getEstaEliminado()): ?>
+                            <div class="table-responsive mb-2 mb-lg-0">
 
-                                    <td>
+                                <table class="table table-striped">
+                                    <tr>
+                                    <th>Nombre</th><th>Apellidos</th><th>DNI</th><th>Email</th><th>Provincia</th><th>Localidad</th><th>Fecha de nacimiento</th><th></th><th></th>
+                                    </tr>
 
-                                        <form action="../Controller/activarUsuario.php" method="post">
-                                            <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
-                                            <input type="submit" class="btn btn-success" value="Activar">
-                                        </form>
+                                    <?php
+                                    // Añado un if para controlar si hay 1 usuario o más de cara al uso del foreach (cuando se usa el botón Buscar)
+                                    if (!isset($usuario)) {
 
-                                    </td>
+                                    foreach ($data['usuarios'] as $usuario) {
 
-                                    <?php endif ?>
-                                </tr>
+                                    ?>
+                                    <tr>
+                                        <td><?=$usuario->getNombre()?></td><td><?=$usuario->getApellidos()?></td><td><?=$usuario->getDni()?></td></td><td><?=$usuario->getEmail()?></td><td><?=$usuario->getProvincia()?></td><td><?=$usuario->getLocalidad()?></td><td><?=$usuario->getFechaNacimiento()?></td>
+                                        <td>
 
-                                <?php
+                                            <form action="../Controller/modificarUsuario.php" method="post">
+                                                <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
+                                                <input type="hidden" name="usuarioNombre" value="<?=$usuario->getNombre()?>">
+                                                <input type="hidden" name="usuarioApellidos" value="<?=$usuario->getApellidos()?>">
+                                                <input type="hidden" name="usuarioEmail" value="<?=$usuario->getEmail()?>">
+                                                <input type="hidden" name="usuarioProvincia" value="<?=$usuario->getProvincia()?>">
+                                                <input type="hidden" name="usuarioLocalidad" value="<?=$usuario->getLocalidad()?>">
+                                                <input type="hidden" name="usuarioFecha" value="<?=$usuario->getFechaNacimiento()?>">
+                                                <input type="hidden" name="usuarioContrasenia" value="<?=$usuario->getContrasenia()?>">
+                                                <input type="hidden" name="usuarioEsTecnico" value="<?=$usuario->getEsTecnico()?>">
+                                                <input type="hidden" name="usuarioEsAdmin" value="<?=$usuario->getEsAdmin()?>">
+                                                <input type="hidden" name="usuarioEstaEliminado" value="<?=$usuario->getEstaEliminado()?>">
+                                                <input type="submit" class="btn btn-primary" value="Modificar">
+                                            </form>
+                                        
+                                        </td>
+
+                                        <?php if(!$usuario->getEstaEliminado()): ?>
+
+                                        <td>
+
+                                            <form action="../Controller/eliminarUsuario.php" method="post">
+                                                <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
+                                                <input type="submit" class="btn btn-danger" value="Eliminar">
+                                            </form>
+                                        
+                                        </td>
+
+                                        <?php endif ?>
+
+                                        <?php if($usuario->getEstaEliminado()): ?>
+
+                                        <td>
+
+                                            <form action="../Controller/activarUsuario.php" method="post">
+                                                <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
+                                                <input type="submit" class="btn btn-success" value="Activar">
+                                            </form>
+
+                                        </td>
+
+                                        <?php endif ?>
+                                    </tr>
+
+                                    <?php
+                                        }
+                                    } else {
+                                    ?>
+
+                                    <tr>
+                                        <td><?=$usuario->getNombre()?></td><td><?=$usuario->getApellidos()?></td><td><?=$usuario->getDni()?></td></td><td><?=$usuario->getEmail()?></td><td><?=$usuario->getProvincia()?></td><td><?=$usuario->getLocalidad()?></td><td><?=$usuario->getFechaNacimiento()?></td>
+                                        <td>
+
+                                            <form action="" method="post">
+                                                <input type="submit" class="btn btn-primary" value="Modificar">
+                                            </form>
+                                        
+                                        </td>
+
+                                        <?php if(!$usuario->getEstaEliminado()): ?>
+
+                                        <td>
+
+                                            <form action="../Controller/eliminarUsuario.php" method="post">
+                                                <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
+                                                <input type="submit" class="btn btn-danger" value="Eliminar">
+                                            </form>
+                                        
+                                        </td>
+
+                                        <?php endif ?>
+
+                                        <?php if($usuario->getEstaEliminado()): ?>
+
+                                        <td>
+
+                                            <form action="../Controller/activarUsuario.php" method="post">
+                                                <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
+                                                <input type="submit" class="btn btn-success" value="Activar">
+                                            </form>
+
+                                        </td>
+
+                                        <?php endif ?>
+                                    </tr>
+
+                                    <?php
                                     }
-                                } else {
-                                ?>
-
-                                <tr>
-                                    <td><?=$usuario->getNombre()?></td><td><?=$usuario->getApellidos()?></td><td><?=$usuario->getDni()?></td></td><td><?=$usuario->getEmail()?></td><td><?=$usuario->getProvincia()?></td><td><?=$usuario->getLocalidad()?></td><td><?=$usuario->getFechaNacimiento()?></td>
-                                    <td>
-
-                                        <form action="" method="post">
-                                            <input type="submit" class="btn btn-primary" value="Modificar">
-                                        </form>
-                                    
-                                    </td>
-
-                                    <?php if(!$usuario->getEstaEliminado()): ?>
-
-                                    <td>
-
-                                        <form action="../Controller/eliminarUsuario.php" method="post">
-                                            <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
-                                            <input type="submit" class="btn btn-danger" value="Eliminar">
-                                        </form>
-                                    
-                                    </td>
-
-                                    <?php endif ?>
-
-                                    <?php if($usuario->getEstaEliminado()): ?>
-
-                                    <td>
-
-                                        <form action="../Controller/activarUsuario.php" method="post">
-                                            <input type="hidden" name="usuarioId" value="<?=$usuario->getDni()?>">
-                                            <input type="submit" class="btn btn-success" value="Activar">
-                                        </form>
-
-                                    </td>
-
-                                    <?php endif ?>
-                                </tr>
-
-                                <?php
-                                }
-                                ?>
+                                    ?>
 
 
-                            </table>
+                                </table>
+
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
 
                         </div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
-
-                    </div>
 
                 </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

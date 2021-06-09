@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="../View/css/estilos.css">
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
@@ -22,35 +22,37 @@
         
             <!-- Formulario cambio de estado -->
 
-            <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                <div class="col-md-12 bg-light p-5">
+                    <div class="col-md-12 bg-light p-5">
 
-                    <h2 class="text-center py-2">Cambiar estado de la incidencia:</h2>
+                        <h2 class="text-center py-2">Cambiar estado de la incidencia:</h2>
 
-                    <div class="row mt-3">
-                        <div class="col d-flex flex-row justify-content-center">
-                            <form action="" method="post">
-                                <input type="hidden" name="incidenciaId" value="<?=$_POST['incidenciaId']?>">
-                                <select required id="estadoform" name="estadoform" class="form-select">
-                                    <option value="1">En proceso</option>
-                                    <option value="2">Resuelto</option>
-                                </select>
-                                <small class="form-text text-muted">
-                                Si dejas el estado como Resuelto, no podrás volver a modificar la incidencia.
-                                </small><br><br>
-                                <button type="button" class="btn btn-primary" onclick="window.location.href='../Controller/verIncidenciasTecnico.php'">Volver</button>
-                                <input type="submit" class="btn btn-success" value="Enviar">
-                            </form>
+                        <div class="row mt-3">
+                            <div class="col d-flex flex-row justify-content-center">
+                                <form action="" method="post">
+                                    <input type="hidden" name="incidenciaId" value="<?=$_POST['incidenciaId']?>">
+                                    <select required id="estadoform" name="estadoform" class="form-select">
+                                        <option value="1">En proceso</option>
+                                        <option value="2">Resuelto</option>
+                                    </select>
+                                    <small class="form-text text-muted">
+                                    Si dejas el estado como Resuelto, no podrás volver a modificar la incidencia.
+                                    </small><br><br>
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='../Controller/verIncidenciasTecnico.php'">Volver</button>
+                                    <input type="submit" class="btn btn-success" value="Enviar">
+                                </form>
+                            </div>
                         </div>
+
                     </div>
+                        
 
                 </div>
-                    
-
-            </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 

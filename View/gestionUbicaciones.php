@@ -11,102 +11,104 @@
     <script src="../View/css/jquery-3.6.0.min.js"></script>
     <title>Sistema de gestión de incidencias</title>
   </head>
-  <body class="h-100">
+  <body>
 
             <!-- Banner y logos -->
 
-            <header class="container logos-menu mt-3">      
+            <header class="logos-menu mt-3">      
                 
                     <h1>Sistema de gestión de incidencias (SGI)</h1>
                 
             </header>
         
-            <!-- Listado de usuarios -->
+            <!-- Cuerpo de la web -->
 
-            <div class="container h-100">
-                <div class="row h-100 justify-content-center align-items-center">
+            <main>
+                <div class="container">
+                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-                    <div class="col-12 bg-light p-5 rounded">
+                        <div class="col-12 bg-light p-5 rounded">
 
-                        <h2 class="text-center bg-primary text-light text-uppercase py-2">Gestión de ubicaciones</h2>
+                            <h2 class="text-center bg-primary text-light text-uppercase py-2">Gestión de ubicaciones</h2>
 
-                        <div class="row mt-3 mb-3">
-                        <form action="" method="post">
-                                
-                                <div class="col d-flex flex-row align-items-center">
-                                    <div class="col-lg-1 col-sm-2 col-3">
-                                        <label for="nombreUbicacion" class="form-label">Ubicación: </label>
+                            <div class="row mt-3 mb-3">
+                            <form action="" method="post">
+                                    
+                                    <div class="col d-flex flex-row align-items-center">
+                                        <div class="col-lg-1 col-sm-2 col-3">
+                                            <label for="nombreUbicacion" class="form-label">Ubicación: </label>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-5">
+                                        <input type="text" id="nombreUbicacion" name="nombreUbicacion" class="form-control" required placeholder="Escriba el nombre">
+                                        </div>
+                                        <div class="col-lg-4 ms-3 col-sm-5">
+                                        <input type="submit" class="btn btn-primary" value="Buscar">
+                                        </div>
                                     </div>
-                                    <div class="col-lg-2 col-sm-4">
-                                    <input type="text" id="nombreUbicacion" name="nombreUbicacion" class="form-control" required placeholder="Escriba el nombre">
-                                    </div>
-                                    <div class="col-lg-4 ms-3 col-sm-5">
-                                    <input type="submit" class="btn btn-primary" value="Buscar">
-                                    </div>
-                                </div>
-                                
-                        </form>
+                                    
+                            </form>
+                            </div>
+
+                            <div class="table-responsive mb-2 mb-lg-0">
+
+                                <table class="table table-striped">
+                                    <tr>
+                                    <th>Id</th><th>Nombre</th><th style="width:10%"></th><th style="width:10%"></th><th style="width:10%"></th>
+                                    </tr>
+
+                                    <?php
+                                    foreach ($data['ubicaciones'] as $ubicacion) {
+
+                                    ?>
+                                        <?php if(!$ubicacion->getEstaEliminado()): ?>
+                                            <tr>
+                                                <td><?=$ubicacion->getId()?></td><td><?=$ubicacion->getNombre()?></td>
+                                                <td>
+
+                                                    <form action="" method="post">
+                                                        <input type="hidden" name="nombre" value="<?=$ubicacion->getNombre()?>">
+                                                        <input type="hidden" name="descripcion" value="<?=$ubicacion->getDescripcion()?>">
+                                                        <input type="submit" class="btn btn-dark" value="Detalles">
+                                                    </form>
+                                                
+                                                </td>
+                                                <td>
+
+                                                    <form action="../Controller/modificarUbicacion.php" method="post">
+                                                        <input type="hidden" name="ubicacionId" value="<?=$ubicacion->getId()?>">
+                                                        <input type="hidden" name="ubicacionNombre" value="<?=$ubicacion->getNombre()?>">
+                                                        <input type="hidden" name="ubicacionDescripcion" value="<?=$ubicacion->getDescripcion()?>">
+                                                        <input type="hidden" name="ubicacionEstaEliminado" value="<?=$ubicacion->getEstaEliminado()?>">
+                                                        <input type="submit" class="btn btn-primary" value="Modificar">
+                                                    </form>
+                                                
+                                                </td>
+
+                                                <td>
+
+                                                    <form action="" method="post">
+                                                        <input type="hidden" name="ubicacionIdEliminar" value="<?=$ubicacion->getId()?>">
+                                                        <input type="submit" class="btn btn-danger" value="Eliminar">
+                                                    </form>
+                                                
+                                                </td>
+                                            </tr>
+                                        <?php endif ?>
+                                    <?php
+                                    }
+                                    ?>
+
+                                </table>
+
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="window.location.href='../Controller/nuevaUbicacion.php'">Añadir ubicación</button>
+
                         </div>
-
-                        <div class="table-responsive mb-2 mb-lg-0">
-
-                            <table class="table table-striped">
-                                <tr>
-                                <th>Id</th><th>Nombre</th><th style="width:10%"></th><th style="width:10%"></th><th style="width:10%"></th>
-                                </tr>
-
-                                <?php
-                                foreach ($data['ubicaciones'] as $ubicacion) {
-
-                                ?>
-                                    <?php if(!$ubicacion->getEstaEliminado()): ?>
-                                        <tr>
-                                            <td><?=$ubicacion->getId()?></td><td><?=$ubicacion->getNombre()?></td>
-                                            <td>
-
-                                                <form action="" method="post">
-                                                    <input type="hidden" name="nombre" value="<?=$ubicacion->getNombre()?>">
-                                                    <input type="hidden" name="descripcion" value="<?=$ubicacion->getDescripcion()?>">
-                                                    <input type="submit" class="btn btn-dark" value="Detalles">
-                                                </form>
-                                            
-                                            </td>
-                                            <td>
-
-                                                <form action="../Controller/modificarUbicacion.php" method="post">
-                                                    <input type="hidden" name="ubicacionId" value="<?=$ubicacion->getId()?>">
-                                                    <input type="hidden" name="ubicacionNombre" value="<?=$ubicacion->getNombre()?>">
-                                                    <input type="hidden" name="ubicacionDescripcion" value="<?=$ubicacion->getDescripcion()?>">
-                                                    <input type="hidden" name="ubicacionEstaEliminado" value="<?=$ubicacion->getEstaEliminado()?>">
-                                                    <input type="submit" class="btn btn-primary" value="Modificar">
-                                                </form>
-                                            
-                                            </td>
-
-                                            <td>
-
-                                                <form action="" method="post">
-                                                    <input type="hidden" name="ubicacionIdEliminar" value="<?=$ubicacion->getId()?>">
-                                                    <input type="submit" class="btn btn-danger" value="Eliminar">
-                                                </form>
-                                            
-                                            </td>
-                                        </tr>
-                                    <?php endif ?>
-                                <?php
-                                }
-                                ?>
-
-                            </table>
-
-                        </div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="window.location.href='../Controller/nuevaUbicacion.php'">Añadir ubicación</button>
-
-                    </div>
 
                 </div>
-            </div>
+                </div>
+            </main>
 
             <!-- Footer -->
 
