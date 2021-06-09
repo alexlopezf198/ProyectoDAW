@@ -20,6 +20,11 @@ if (!isset($_SESSION['user'])) {
                     // Login correcto, almacena la sesión
                     $_SESSION['user']=$_POST['dni'];
                     $_SESSION['password']=$_POST['password'];
+
+                    if (isset($_POST['recordar'])) {
+                        setcookie('user', $_POST['dni'], time() + 24 * 3600);
+                    }
+
                     header("refresh: 0;");
 
                 } else {
@@ -37,7 +42,12 @@ if (!isset($_SESSION['user'])) {
             include '../View/acceso.php';
         }
 
-    }else{
+    } elseif (isset($_COOKIE['user'])) {
+
+        $_SESSION['user'] = $_COOKIE['user'];
+        header("refresh: 0;");
+
+    } else{
         include '../View/acceso.php';
     }
 } else {
@@ -46,6 +56,11 @@ if (!isset($_SESSION['user'])) {
 
     if (isset($_POST['cambiarRol'])) {
         unset($_SESSION['rol']);
+        if (isset($_COOKIE['rol'])) {
+            unset($_COOKIE['rol']);
+            setcookie("rol", NULL, -1);
+        }
+        header("refresh: 0;");
     }
 
     // Recupero datos del usuario
@@ -77,6 +92,15 @@ if (!isset($_SESSION['user'])) {
 
             if (isset($_POST['rol'])) {
                 $_SESSION['rol'] = $_POST['rol'];
+
+                if (isset($_COOKIE['user'])) {
+                    setcookie('rol', $_POST['rol'], time() + 24 * 3600);
+                }
+
+                header("refresh: 0;");
+            } elseif (isset($_COOKIE['rol'])) {
+
+                $_SESSION['rol'] = $_COOKIE['rol'];
                 header("refresh: 0;");
             } else {
                 include '../View/selectRol.php';
@@ -101,6 +125,15 @@ if (!isset($_SESSION['user'])) {
 
             if (isset($_POST['rol'])) {
                 $_SESSION['rol'] = $_POST['rol'];
+
+                if (isset($_COOKIE['user'])) {
+                    setcookie('rol', $_POST['rol'], time() + 24 * 3600);
+                }
+
+                header("refresh: 0;");
+            } elseif (isset($_COOKIE['rol'])) {
+
+                $_SESSION['rol'] = $_COOKIE['rol'];
                 header("refresh: 0;");
             } else {
                 include '../View/selectRol.php';

@@ -39,7 +39,7 @@ class Tipo{
 
     public static function getTipos() {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM tipo ORDER BY nombre";
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM tipo WHERE estaEliminado=0 ORDER BY nombre";
         $consulta = $conexion->query($seleccion);
         $tipos = [];
         while ($registro = $consulta->fetchObject()) {

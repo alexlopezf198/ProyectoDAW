@@ -39,7 +39,7 @@ class Ubicacion{
 
     public static function getUbicaciones() {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM ubicacion ORDER BY nombre";
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM ubicacion WHERE estaEliminado=0 ORDER BY nombre";
         $consulta = $conexion->query($seleccion);
         $ubicaciones = [];
         while ($registro = $consulta->fetchObject()) {
