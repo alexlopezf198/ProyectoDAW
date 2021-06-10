@@ -66,6 +66,26 @@ class Usuario{
         return $usuarios;
     }
 
+    public static function getUsuariosPaginacion($offset, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario ORDER BY apellidos LIMIT ".$offset.", ".$cant_registros."";
+        $consulta = $conexion->query($seleccion);
+        $usuarios = [];
+        while ($registro = $consulta->fetchObject()) {
+            $usuarios[] = new Usuario($registro->dni, $registro->nombre, $registro->apellidos, $registro->email, $registro->provincia, $registro->localidad, $registro->fechaNacimiento, $registro->contrasenia, $registro->esTecnico, $registro->esAdmin, $registro->estaEliminado);
+        }
+        return $usuarios;
+    }
+
+    public static function getPaginasTotales($cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario";
+        $consulta = $conexion->query($seleccion);
+        $filas_totales = $consulta->rowCount();
+        $paginas_totales = ceil($filas_totales / $cant_registros);
+        return $paginas_totales;
+    }
+
     public static function getUsuariosClientes() {
         $conexion = ProyectoDB::connectDB();
         $seleccion = "SELECT dni, nombre, apellidos, email, provincia, localidad, fechaNacimiento, contrasenia, esTecnico, esAdmin, estaEliminado FROM usuario WHERE esTecnico=0 AND esAdmin=0 ORDER BY apellidos";

@@ -13,6 +13,17 @@ if (!isset($_SESSION['user'])) {
     
     if ($data['user']->getEsAdmin()) {
 
+        // Paginación del listado
+
+        if (isset($_GET['p'])) {
+            $pagina = $_GET['p'];
+        } else {
+            $pagina = 1;
+        }
+        $cant_registros = 10;
+        $offset = ($pagina-1) * $cant_registros;
+        $paginas_totales = Ubicacion::getPaginasTotales($cant_registros);
+
         if (isset($_POST['nombreUbicacion'])) {
 
             // Obtiene las ubicaciones del filtro Buscar
@@ -21,7 +32,7 @@ if (!isset($_SESSION['user'])) {
         } else {
 
             // Obtiene todas las ubicaciones
-            $data['ubicaciones'] = Ubicacion::getUbicacionesListar();
+            $data['ubicaciones'] = Ubicacion::getUbicacionesListarPaginacion($offset, $cant_registros);
 
         }
 

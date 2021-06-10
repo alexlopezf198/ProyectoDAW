@@ -68,6 +68,11 @@
                                                     <form action="" method="post">
                                                         <input type="hidden" name="nombre" value="<?=$tipo->getNombre()?>">
                                                         <input type="hidden" name="descripcion" value="<?=$tipo->getDescripcion()?>">
+                                                        <?php
+                                                            if (isset($_POST['nombreTipo'])) {
+                                                                echo '<input type="hidden" name="nombreTipo" value="'.$_POST["nombreTipo"].'">';
+                                                            }
+                                                        ?>
                                                         <input type="submit" class="btn btn-dark" value="Detalles">
                                                     </form>
                                                 
@@ -79,7 +84,7 @@
                                                         <input type="hidden" name="tipoNombre" value="<?=$tipo->getNombre()?>">
                                                         <input type="hidden" name="tipoDescripcion" value="<?=$tipo->getDescripcion()?>">
                                                         <input type="hidden" name="tipoEstaEliminado" value="<?=$tipo->getEstaEliminado()?>">
-                                                        <input type="submit" class="btn btn-primary" value="Modificar">
+                                                        <input type="submit" class="btn btn-modificar" value="Modificar">
                                                     </form>
                                                 
                                                 </td>
@@ -88,6 +93,11 @@
 
                                                     <form action="" method="post">
                                                         <input type="hidden" name="tipoIdEliminar" value="<?=$tipo->getId()?>">
+                                                        <?php
+                                                            if (isset($_POST['nombreTipo'])) {
+                                                                echo '<input type="hidden" name="nombreTipo" value="'.$_POST["nombreTipo"].'">';
+                                                            }
+                                                        ?>
                                                         <input type="submit" class="btn btn-danger" value="Eliminar">
                                                     </form>
                                                 
@@ -101,8 +111,40 @@
                                 </table>
 
                             </div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="window.location.href='../Controller/nuevoTipo.php'">Añadir tipo</button>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="window.location.href='../Controller/nuevoTipo.php'">Añadir tipo</button>
+                                </div>
+
+                                <!-- Paginación -->
+
+                                <?php if (!isset($_POST['nombreTipo'])): ?>
+
+                                <div class="col">
+                                    <nav aria-label="Botones de paginación" class="mt-1">
+                                        <ul class="pagination pagination-sm justify-content-end m-0">
+                                            <li class="page-item <?php if($pagina <= 1){ echo 'disabled'; } ?>">
+                                                <a class="page-link"
+                                                    href="<?php if($pagina <= 1){ echo ''; } else { echo "?p=" . ($pagina-1); } ?>">Anterior</a>
+                                            </li>
+
+                                            <?php for($i = 1; $i <= $paginas_totales; $i++ ): ?>
+                                            <li class="page-item <?php if($pagina == $i) {echo 'active'; } ?>">
+                                                <a class="page-link" href="?p=<?= $i; ?>"> <?= $i; ?> </a>
+                                            </li>
+                                            <?php endfor; ?>
+
+                                            <li class="page-item <?php if($pagina >= $paginas_totales) { echo 'disabled'; } ?>">
+                                                <a class="page-link"
+                                                    href="<?php if($pagina >= $paginas_totales){ echo ''; } else {echo "?p=". ($pagina+1); } ?>">Siguiente</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                                <?php endif ?>
+                            </div>
 
                         </div>
 
@@ -114,10 +156,17 @@
 
             <footer class="container-fluid text-white elfooter">
                 <div class="row align-items-center justify-content-center text-center">
-                    <div class="col-sm-12 col-md-6 mt-5 text-warning">
-                        <a href="#">Contacto</a>
+                    <div class="col-sm-12 col-md-4 order-1 mt-5 text-warning">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modalContacto">Contacto</a>
                     </div>
-                    <div class="col-sm-12 col-md-6 mt-5 text-warning">
+                    <div class="col-sm-12 col-md-4 order-3 order-md-2 mt-5 text-warning">
+                        <a href="https://www.facebook.com/"><img width="35px" height="35px" src="../View/img/facebook.png"></a>
+                        <a href="https://twitter.com/"><img width="35px" height="35px" src="../View/img/twitter.png"></a>
+                        <a href="https://www.pinterest.es/"><img width="35px" height="35px" src="../View/img/pinterest.png"></a>
+                        <a href="https://www.instagram.com/"><img width="35px" height="35px" src="../View/img/instagram.png"></a>
+                        <a href="https://www.youtube.com/"><img width="35px" height="35px" src="../View/img/youtube.png"></a>
+                    </div>
+                    <div class="col-sm-12 col-md-4 order-2 order-md-3 mt-5 text-warning">
                         <a href="#">Ayuda</a>
                     </div>
                 </div>
@@ -132,6 +181,32 @@
                     </div>
                 </div>
             </footer>
+
+             <!-- Modal con el formulario de contacto -->
+            <div class="modal fade" id="modalContacto" tabindex="-1" aria-labelledby="modalContactoLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="modalContactoLabel">Contacte con nosotros</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <form>
+                        <label for="contactoNombre" class="form-label">Nombre</label>
+                        <input type="text" name="contactoNombre" id="contactoNombre" class="form-control" placeholder="Escriba su nombre"><br>
+                        <label for="contactoEmail" class="form-label">Email</label>
+                        <input type="email" name="contactoEmail" id="contactoEmail" class="form-control" placeholder="Escriba su dirección de email"><br>
+                        <label for="contactoMensaje" class="form-label">Mensaje</label>
+                        <textarea class="form-control" placeholder="Escriba aquí su mensaje" id="contactoMensaje"></textarea><br>
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="contactoEnviar">Enviar</button>
+                    </div>
+                </div>
+                </div>
+            </div>
 
             <!-- Modal de Detalles -->
             <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="revisionIncidenciaLabel" aria-hidden="true">

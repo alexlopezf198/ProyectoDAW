@@ -17,7 +17,12 @@ if (!isset($_SESSION['user'])) {
 
             $usuarioEliminado = Usuario::getUsuarioById($_POST['usuarioId']);
             $usuarioEliminado->activarUsuario();
-            header("location: ../Controller/gestionarUsuarios.php");
+
+            if (isset($_POST['p'])){
+                header("location: ../Controller/gestionarUsuarios.php?p=".$_POST['p']);
+            } else {
+                header("location: ../Controller/gestionarUsuarios.php");
+            }
 
         } else {
             header("location: ../index.php");

@@ -13,8 +13,19 @@ if (!isset($_SESSION['user'])) {
     
     if ($data['user']->getEsTecnico()) {
 
+        // Paginación del listado
+
+        if (isset($_GET['p'])) {
+            $pagina = $_GET['p'];
+        } else {
+            $pagina = 1;
+        }
+        $cant_registros = 10;
+        $offset = ($pagina-1) * $cant_registros;
+        $paginas_totales = Incidencia::getPaginasTotalesIncAtendidas($data['user']->getDni(), $cant_registros);
+
         // Obtiene las incidencias atendidas por el técnico
-        $data['incidencias'] = Incidencia::getIncidenciasAtendidas($data['user']->getDni());
+        $data['incidencias'] = Incidencia::getIncidenciasAtendidasPaginacion($data['user']->getDni(), $offset, $cant_registros);
 
         // Obtiene todos los tipos
         $data['tipos'] = Tipo::getTipos();

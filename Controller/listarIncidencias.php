@@ -9,8 +9,19 @@ if (!isset($_SESSION['user'])) {
     header("location: ../index.php");
 } else {
         
+    // Paginación del listado
+
+    if (isset($_GET['p'])) {
+        $pagina = $_GET['p'];
+    } else {
+        $pagina = 1;
+    }
+    $cant_registros = 10;
+    $offset = ($pagina-1) * $cant_registros;
+    $paginas_totales = Incidencia::getPaginasTotales($cant_registros);
+
     // Obtiene todas las incidencias
-    $data['incidencias'] = Incidencia::getIncidencias();
+    $data['incidencias'] = Incidencia::getIncidenciasPaginacion($offset, $cant_registros);
 
     // Obtiene todos los tipos
     $data['tipos'] = Tipo::getTipos();

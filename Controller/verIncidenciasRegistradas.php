@@ -13,8 +13,19 @@ if (!isset($_SESSION['user'])) {
     
     if ($data['user']->getEsTecnico()) {
 
+        // Paginación del listado
+
+        if (isset($_GET['p'])) {
+            $pagina = $_GET['p'];
+        } else {
+            $pagina = 1;
+        }
+        $cant_registros = 10;
+        $offset = ($pagina-1) * $cant_registros;
+        $paginas_totales = Incidencia::getPaginasTotalesIncTramite($cant_registros);
+
         // Obtiene las incidencias que están en trámite
-        $data['incidencias'] = Incidencia::getIncidenciasTramite();
+        $data['incidencias'] = Incidencia::getIncidenciasTramitePaginacion($offset, $cant_registros);
 
         // Obtiene todos los tipos
         $data['tipos'] = Tipo::getTipos();

@@ -13,6 +13,17 @@ if (!isset($_SESSION['user'])) {
     
     if ($data['user']->getEsAdmin()) {
 
+        // Paginación del listado
+
+        if (isset($_GET['p'])) {
+            $pagina = $_GET['p'];
+        } else {
+            $pagina = 1;
+        }
+        $cant_registros = 10;
+        $offset = ($pagina-1) * $cant_registros;
+        $paginas_totales = Usuario::getPaginasTotales($cant_registros);
+
         if (isset($_POST['dniUsuario'])) {
             // Obtiene el usuario introducido en el filtro de Buscar
             $usuario = Usuario::getUsuarioById($_POST['dniUsuario']);
@@ -29,7 +40,7 @@ if (!isset($_SESSION['user'])) {
 
         } else {
             // Obtiene todos los usuarios
-            $data['usuarios'] = Usuario::getUsuarios();
+            $data['usuarios'] = Usuario::getUsuariosPaginacion($offset, $cant_registros);
         }
 
         include '../View/gestionUsuarios.php';

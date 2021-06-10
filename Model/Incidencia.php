@@ -76,6 +76,53 @@ class Incidencia{
         return $incidencias;
     }
 
+    public static function getIncidenciasPaginacion($offset, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia ORDER BY fecha DESC LIMIT ".$offset.", ".$cant_registros."";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getPaginasTotales($cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia";
+        $consulta = $conexion->query($seleccion);
+        $filas_totales = $consulta->rowCount();
+        $paginas_totales = ceil($filas_totales / $cant_registros);
+        return $paginas_totales;
+    }
+
+    public static function getPaginasTotalesIncPropias($id, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_usuario=\"".$id."\"";
+        $consulta = $conexion->query($seleccion);
+        $filas_totales = $consulta->rowCount();
+        $paginas_totales = ceil($filas_totales / $cant_registros);
+        return $paginas_totales;
+    }
+
+    public static function getPaginasTotalesIncTramite($cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE NOT estado=2";
+        $consulta = $conexion->query($seleccion);
+        $filas_totales = $consulta->rowCount();
+        $paginas_totales = ceil($filas_totales / $cant_registros);
+        return $paginas_totales;
+    }
+
+    public static function getPaginasTotalesIncAtendidas($id, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_tecnico=\"".$id."\"";
+        $consulta = $conexion->query($seleccion);
+        $filas_totales = $consulta->rowCount();
+        $paginas_totales = ceil($filas_totales / $cant_registros);
+        return $paginas_totales;
+    }
+
     public static function getIncidenciasTramite() {
         $conexion = ProyectoDB::connectDB();
         $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE NOT estado=2 ORDER BY fecha DESC";
@@ -87,9 +134,31 @@ class Incidencia{
         return $incidencias;
     }
 
+    public static function getIncidenciasTramitePaginacion($offset, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE NOT estado=2 ORDER BY fecha DESC LIMIT ".$offset.", ".$cant_registros."";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
     public static function getIncidenciasAtendidas($id) {
         $conexion = ProyectoDB::connectDB();
         $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_tecnico=\"".$id."\" ORDER BY fecha DESC";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getIncidenciasAtendidasPaginacion($id, $offset, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_tecnico=\"".$id."\" ORDER BY fecha DESC LIMIT ".$offset.", ".$cant_registros."";
         $consulta = $conexion->query($seleccion);
         $incidencias = [];
         while ($registro = $consulta->fetchObject()) {
@@ -156,6 +225,17 @@ class Incidencia{
     public static function getIncidenciasByUsuario($id) {
         $conexion = ProyectoDB::connectDB();
         $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_usuario=\"".$id."\" ORDER BY fecha DESC";
+        $consulta = $conexion->query($seleccion);
+        $incidencias = [];
+        while ($registro = $consulta->fetchObject()) {
+            $incidencias[] = new Incidencia($registro->id, $registro->id_tipo, $registro->id_ubicacion, $registro->titulo, $registro->descripcion, $registro->fecha, $registro->estado, $registro->id_usuario, $registro->id_tecnico);
+        }
+        return $incidencias;
+    }
+
+    public static function getIncidenciasByUsuarioPaginacion($id, $offset, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, id_tipo, id_ubicacion, titulo, descripcion, fecha, estado, id_usuario, id_tecnico FROM incidencia WHERE id_usuario=\"".$id."\" ORDER BY fecha DESC LIMIT ".$offset.", ".$cant_registros."";
         $consulta = $conexion->query($seleccion);
         $incidencias = [];
         while ($registro = $consulta->fetchObject()) {

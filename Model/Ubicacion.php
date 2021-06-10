@@ -48,9 +48,29 @@ class Ubicacion{
         return $ubicaciones;
     }
 
+    public static function getPaginasTotales($cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM ubicacion WHERE estaEliminado=0";
+        $consulta = $conexion->query($seleccion);
+        $filas_totales = $consulta->rowCount();
+        $paginas_totales = ceil($filas_totales / $cant_registros);
+        return $paginas_totales;
+    }
+
     public static function getUbicacionesListar() {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM ubicacion";
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM ubicacion WHERE estaEliminado=0";
+        $consulta = $conexion->query($seleccion);
+        $ubicaciones = [];
+        while ($registro = $consulta->fetchObject()) {
+            $ubicaciones[] = new Ubicacion($registro->id, $registro->nombre, $registro->descripcion, $registro->estaEliminado);
+        }
+        return $ubicaciones;
+    }
+
+    public static function getUbicacionesListarPaginacion($offset, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM ubicacion WHERE estaEliminado=0 LIMIT ".$offset.", ".$cant_registros."";
         $consulta = $conexion->query($seleccion);
         $ubicaciones = [];
         while ($registro = $consulta->fetchObject()) {

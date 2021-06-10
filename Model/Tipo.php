@@ -48,9 +48,29 @@ class Tipo{
         return $tipos;
     }
 
+    public static function getPaginasTotales($cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM tipo WHERE estaEliminado=0";
+        $consulta = $conexion->query($seleccion);
+        $filas_totales = $consulta->rowCount();
+        $paginas_totales = ceil($filas_totales / $cant_registros);
+        return $paginas_totales;
+    }
+
     public static function getTiposListar() {
         $conexion = ProyectoDB::connectDB();
-        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM tipo";
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM tipo WHERE estaEliminado=0";
+        $consulta = $conexion->query($seleccion);
+        $tipos = [];
+        while ($registro = $consulta->fetchObject()) {
+            $tipos[] = new Tipo($registro->id, $registro->nombre, $registro->descripcion, $registro->estaEliminado);
+        }
+        return $tipos;
+    }
+
+    public static function getTiposListarPaginacion($offset, $cant_registros) {
+        $conexion = ProyectoDB::connectDB();
+        $seleccion = "SELECT id, nombre, descripcion, estaEliminado FROM tipo WHERE estaEliminado=0 LIMIT ".$offset.", ".$cant_registros."";
         $consulta = $conexion->query($seleccion);
         $tipos = [];
         while ($registro = $consulta->fetchObject()) {

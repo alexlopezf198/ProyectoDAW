@@ -8,10 +8,21 @@ require_once '../Model/Incidencia.php';
 if (!isset($_SESSION['user'])) {
     header("location: ../index.php");
 } else {
-        
+    
+    // Paginación del listado
+
+    if (isset($_GET['p'])) {
+        $pagina = $_GET['p'];
+    } else {
+        $pagina = 1;
+    }
+    $cant_registros = 10;
+    $offset = ($pagina-1) * $cant_registros;
+
     // Obtiene las incidencias del usuario
     $data['dni'] = $_SESSION['user'];
-    $data['incidencias'] = Incidencia::getIncidenciasByUsuario($data['dni']);
+    $data['incidencias'] = Incidencia::getIncidenciasByUsuarioPaginacion($data['dni'], $offset, $cant_registros);
+    $paginas_totales = Incidencia::getPaginasTotalesIncPropias($data['dni'], $cant_registros);
 
     // Obtiene todos los tipos
     $data['tipos'] = Tipo::getTipos();

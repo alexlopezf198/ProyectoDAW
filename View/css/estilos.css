@@ -46,3 +46,13 @@ a:hover{
 h1{
     color: white;
 }
+
+.btn-modificar{
+    background-color: #6610f2;
+    color: white;
+}
+
+.btn-modificar:hover{
+    background-color: #520dc2;
+    color: white;
+}

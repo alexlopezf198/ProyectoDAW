@@ -26,7 +26,16 @@ if (!isset($_SESSION['user'])) {
             $validacion = true;
 
             // Obtiene todos los datos necesarios para la vista
-            $data['incidencias'] = Incidencia::getIncidenciasTramite();
+            if (isset($_POST['p'])) {
+                $pagina = $_POST['p'];
+            } else {
+                $pagina = 1;
+            }
+            $cant_registros = 10;
+            $offset = ($pagina-1) * $cant_registros;
+            $paginas_totales = Incidencia::getPaginasTotalesIncTramite($cant_registros);
+
+            $data['incidencias'] = Incidencia::getIncidenciasTramitePaginacion($offset, $cant_registros);
             $data['tipos'] = Tipo::getTipos();
             $data['ubicaciones'] = Ubicacion::getUbicaciones();
             if (isset($_POST['tipo'])) {
