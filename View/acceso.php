@@ -23,8 +23,8 @@
             <!-- Login -->
 
             <main>
-                <div class="container">
-                <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+                <div class="container mt-3 mb-3">
+                <div class="row justify-content-center align-items-center" style="min-height: 76vh;">
 
                     <div class="col-md-7 bg-light p-5 rounded">
 

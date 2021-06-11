@@ -20,15 +20,15 @@
 
             <header class="logos-menu mt-3">      
                 
-                    <h1>Sistema de gestión de incidencias (SGI)</h1>
+                    <img src="../View/img/logo.png" class="img-fluid" alt="...">
                 
             </header>
         
             <!-- Cuerpo de la web -->
 
             <main>
-                <div class="container">
-                <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+                <div class="container mt-3 mb-3">
+                <div class="row justify-content-center align-items-center" style="min-height: 76vh;">
 
                     <div class="col-md-7 bg-light p-5 rounded">
 
