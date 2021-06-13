@@ -20,35 +20,44 @@
                 
             </header>
         
-            <!-- Cuerpo de la web -->
+            <!-- Login -->
 
             <main>
-                <div class="container mt-3 mb-3">
+                <div class="container-fluid mt-3 mb-3">
                 <div class="row justify-content-center align-items-center" style="min-height: 76vh;">
 
-                    <div class="col-md-12 bg-light p-5">
+                    <div class="col-md-7 bg-light p-5 rounded">
 
-                        <h2 class="text-center py-2">Cambiar estado de la incidencia:</h2>
+                        <button type="button" class="btn btn-primary mb-5" data-bs-toggle="modal" onclick="window.location.href='../index.php'">Volver</button>
 
-                        <div class="row mt-3">
-                            <div class="col d-flex flex-row justify-content-center">
-                                <form action="" method="post">
-                                    <input type="hidden" name="incidenciaId" value="<?=$_POST['incidenciaId']?>">
-                                    <select required id="estadoform" name="estadoform" class="form-select">
-                                        <option value="1">En proceso</option>
-                                        <option value="2">Resuelto</option>
-                                    </select>
-                                    <small class="form-text text-muted">
-                                    Si dejas el estado como Resuelto, no podrás volver a modificar la incidencia.
-                                    </small><br><br>
-                                    <button type="button" class="btn btn-primary" onclick="window.location.href='../Controller/verIncidenciasTecnico.php'">Volver</button>
-                                    <input type="submit" class="btn btn-success" value="Enviar">
-                                </form>
+                        <h2 class="text-center text-uppercase py-2 textoAyuda">Ayuda</h2>
+
+                        <ul class="list-group">
+                            <li class="list-group-item active" aria-current="true"><a href="?p=1">1. Registro de usuarios</a></li>
+                            <li class="list-group-item"><a href="?p=2">2. Inicio de sesión</a></li>
+                            <li class="list-group-item"><a href="?p=3">3. Uso de la aplicación como cliente</a></li>
+                            <li class="list-group-item"><a href="?p=4">4. Uso de la aplicación como técnico</a></li>
+                            <li class="list-group-item"><a href="?p=5">5. Uso de la aplicación como administrador</a></li>
+                        </ul>
+
+                        <br>
+                        <div class="container cuerpoAyuda">
+                            <div class="col-12 rounded pt-4 pb-1">
+                                <h4 class="text-center"><b><u>Registro de usuarios</u></b></h4><br>
+                                <p>Para usar la aplicación, el usuario se tiene que registrar en el sistema para tener una cuenta en la base de datos que le servirá para utilizar la aplicación.
+                                    <br><br>Para ello, estando en la pantalla de Login, vamos al botón “Registrarse”<br><br>
+                                    <img src="../View/img/ayuda/captura1.png" class="img-fluid" alt="..."><br><br>
+                                    A continuación, nos aparecerá un formulario de registro donde tendremos que tener en cuenta algunas cosas:<br>
+                                    - El DNI deberá estar formado por 8 números y 1 letra<br>
+                                    - El DNI y el Email son únicos para cada usuario.<br>
+                                    Una vez se completen todos los campos, deberemos dar click en el botón “Enviar”<br><br>
+                                    <img src="../View/img/ayuda/captura2.png" class="img-fluid" alt="..."><br><br>
+                                    Si todo ha ido bien, veremos el siguiente mensaje:<br><br>
+                                    <img src="../View/img/ayuda/captura3.png" class="img-fluid" alt="..."><br><br>
+                                </p>
                             </div>
                         </div>
-
                     </div>
-                        
 
                 </div>
                 </div>

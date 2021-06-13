@@ -15,6 +15,7 @@ body{
     background-image: url(../img/background.jpg);
     background-size: auto;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .elfooter {
@@ -55,4 +56,24 @@ h1{
 .btn-modificar:hover{
     background-color: #520dc2;
     color: white;
+}
+
+/* Ayuda */
+
+.list-group a {
+    font-size: 1.5rem;
+    color: black;
+}
+
+.list-group .active a {
+    color: white;
+}
+
+.textoAyuda{
+    background-color:gray;
+    color: white;
+}
+
+.cuerpoAyuda{
+    background-color: #fff7e3;
 }

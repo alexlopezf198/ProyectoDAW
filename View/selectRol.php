@@ -73,7 +73,7 @@
                         <a href="https://www.youtube.com/"><img width="35px" height="35px" src="../View/img/youtube.png"></a>
                     </div>
                     <div class="col-sm-12 col-md-4 order-2 order-md-3 mt-5 text-warning">
-                        <a href="#">Ayuda</a>
+                        <a href="../Controller/verAyuda.php">Ayuda</a>
                     </div>
                 </div>
                 <div class="row">
